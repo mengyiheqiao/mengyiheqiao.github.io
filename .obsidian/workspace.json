@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "e56f321a1e741855",
+        "id": "f6ba115a52d6e330",
         "type": "tabs",
         "children": [
           {
-            "id": "a11860c25858b569",
+            "id": "6ff386e372b2d914",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "split-diff-view",
               "state": {
-                "file": "source/_posts/烦心事——存钱.md",
-                "mode": "source",
-                "source": false
+                "aFile": ".obsidian/plugins/obsidian-git/data.json",
+                "bFile": ".obsidian/plugins/obsidian-git/data.json",
+                "aRef": ""
               },
-              "icon": "lucide-file",
-              "title": "烦心事——存钱"
+              "icon": "diff",
+              "title": "Diff: data.json"
             }
           }
         ]
@@ -89,7 +89,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 298.5
   },
   "right": {
     "id": "e5b7e46fef9dd5a4",
@@ -153,13 +153,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/烦心事——存钱.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "烦心事——存钱 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -192,10 +191,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "23a840e4f8f73bf5",
+  "active": "6ff386e372b2d914",
   "lastOpenFiles": [
-    "source/_posts/很高兴认识你jiayu.md",
     "source/_posts/烦心事——存钱.md",
+    "source/_posts/很高兴认识你jiayu.md",
     "未命名.base",
     "未命名 1.base",
     "source/_obsidian/Post Template.md",
