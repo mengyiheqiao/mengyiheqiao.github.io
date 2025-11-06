@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "341693c881f3fe0d",
+        "id": "e56f321a1e741855",
         "type": "tabs",
         "children": [
           {
-            "id": "087c2b425036d32d",
+            "id": "a11860c25858b569",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -153,13 +153,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "scaffolds/draft.md",
+                "file": "source/_posts/烦心事——存钱.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "draft 的大纲"
+              "title": "烦心事——存钱 的大纲"
             }
           },
           {
@@ -192,10 +192,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "087c2b425036d32d",
+  "active": "23a840e4f8f73bf5",
   "lastOpenFiles": [
-    "source/_posts/烦心事——存钱.md",
     "source/_posts/很高兴认识你jiayu.md",
+    "source/_posts/烦心事——存钱.md",
     "未命名.base",
     "未命名 1.base",
     "source/_obsidian/Post Template.md",
