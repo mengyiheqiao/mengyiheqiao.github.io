@@ -84,8 +84,7 @@
               "title": "File Tree"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -193,13 +192,18 @@
   },
   "active": "b8529ac66cd86fe9",
   "lastOpenFiles": [
+    "source/image/607b063b2df3eQNE.gif",
+    "source/_posts/无聊 or与虚无旧情复燃？.md",
     "source/_posts/烦心事——存钱.md",
+    "source/_obsidian/Post Template.md",
+    "source/image/未命名.md",
+    "source/image",
+    "db.json",
     "tags/哲学/index.html",
     "tags/哲学",
     "2025/11/06/无聊 or与虚无旧情复燃？/index.html",
     "2025/11/06/无聊 or与虚无旧情复燃？",
     "source/_posts/很高兴认识你jiayu.md",
-    "source/_posts/无聊 or与虚无旧情复燃？.md",
     "关停大脑.md",
     "607b063b2df3eQNE.gif",
     "1.jpg",
@@ -207,10 +211,7 @@
     "2025/11/06/实验",
     "2025/11/06",
     "tags/生活/index.html",
-    "tags/开始/index.html",
-    "tags/博客/index.html",
     "css/images/banner.jpg",
-    "source/_obsidian/Post Template.md",
     "scaffolds/page.md",
     "scaffolds/draft.md",
     "scaffolds/post.md",
