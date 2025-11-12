@@ -20,8 +20,19 @@
               "icon": "lucide-file",
               "title": "源代码"
             }
+          },
+          {
+            "id": "1086e79a3e3560f5",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -191,34 +202,34 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b8529ac66cd86fe9",
+  "active": "da0ca718db671d1a",
   "lastOpenFiles": [
+    "1.jpg",
+    "607b063b2df3eQNE.gif",
+    "source/_obsidian/Post Template.md",
+    "source/_posts/反复删除回答的屑知乎.md",
+    "source/_posts/Untitled.md",
+    "db.json",
+    "public/CNAME",
+    "public/index.html",
+    "public/2025/11/04/很高兴认识你jiayu/index.html",
+    "public/2025/11/12/烦心事——存钱/index.html",
+    "public/2025/11/12/无聊 or与虚无旧情复燃？/index.html",
+    "public/2025/11/12/推荐游戏/index.html",
+    "public/2025/11/12/Untitled/index.html",
+    "public/2025/11/12/源代码/index.html",
+    "public/2025/11/12/反复删除回答的屑知乎/index.html",
+    "public/images/607b063b2df3eQNE.gif",
     "source/_posts/无聊 or与虚无旧情复燃？.md",
     "source/_posts/源代码.md",
     "source/_posts/推荐游戏.md",
-    "source/_posts/反复删除回答的屑知乎.md",
-    "source/_posts/Untitled.md",
     "source/_posts/烦心事——存钱.md",
     "source/_posts/很高兴认识你jiayu.md",
-    "tags/规则/index.html",
-    "tags/规则",
-    "tags/知乎/index.html",
-    "tags/知乎",
-    "tags/游戏/index.html",
-    "tags/游戏",
-    "2025/11/09/推荐游戏/index.html",
-    "2025/11/09/推荐游戏",
-    "2025/11/09",
-    "2025/11/08/反复删除回答的屑知乎/index.html",
     "source/images/607b063b2df3eQNE.gif",
     "images/607b063b2df3eQNE.gif",
     "public/css/images/banner.jpg",
-    "public/images/607b063b2df3eQNE.gif",
-    "source/_obsidian/Post Template.md",
     "source/image/未命名.md",
     "关停大脑.md",
-    "607b063b2df3eQNE.gif",
-    "1.jpg",
     "css/images/banner.jpg",
     "scaffolds/page.md",
     "scaffolds/draft.md",
