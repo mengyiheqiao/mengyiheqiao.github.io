@@ -25,14 +25,15 @@
             "id": "1086e79a3e3560f5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "split-diff-view",
               "state": {
-                "file": "source/_posts/更新日志.md",
-                "mode": "source",
-                "source": false
+                "aFile": ".obsidian/workspace.json",
+                "bFile": ".obsidian/workspace.json",
+                "aRef": "HEAD",
+                "bRef": ""
               },
-              "icon": "lucide-file",
-              "title": "更新日志"
+              "icon": "diff",
+              "title": "Diff: workspace.json"
             }
           }
         ],
@@ -209,8 +210,8 @@
   },
   "active": "1086e79a3e3560f5",
   "lastOpenFiles": [
-    "conflict-files-obsidian-git.md",
     "source/_posts/更新日志.md",
+    "conflict-files-obsidian-git.md",
     "source/_posts/无聊 or与虚无旧情复燃？.md",
     "source/_posts/烦心事——存钱.md",
     "source/_posts/源代码.md",
