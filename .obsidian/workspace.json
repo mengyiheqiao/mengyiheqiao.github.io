@@ -25,10 +25,14 @@
             "id": "1086e79a3e3560f5",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/更新日志.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "更新日志"
             }
           }
         ],
@@ -135,12 +139,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "scaffolds/draft.md",
+                "file": "未命名 1.base",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "draft 的出链列表"
+              "title": "未命名 1 的出链列表"
             }
           },
           {
@@ -164,12 +168,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "未命名 1.base",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "未命名 1 的大纲"
             }
           },
           {
@@ -202,18 +207,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "43d9bc1624547fab",
+  "active": "1086e79a3e3560f5",
   "lastOpenFiles": [
+    "source/_posts/更新日志.md",
+    "未命名.base",
+    "未命名 1.base",
+    "source/_posts/无聊 or与虚无旧情复燃？.md",
+    "source/_posts/推荐游戏.md",
+    "source/_posts/Untitled.md",
     "关停大脑.md",
     "1.jpg",
     "607b063b2df3eQNE.gif",
-    "未命名.base",
-    "source/_posts/Untitled.md",
     "source/_posts/很高兴认识你jiayu.md",
     "source/_posts/反复删除回答的屑知乎.md",
     "source/_posts/源代码.md",
-    "source/_posts/无聊 or与虚无旧情复燃？.md",
-    "source/_posts/推荐游戏.md",
     "source/_posts/烦心事——存钱.md",
     "source/_obsidian/Post Template.md",
     "db.json",
@@ -224,7 +231,6 @@
     "public/2025/11/12/无聊 or与虚无旧情复燃？/index.html",
     "public/2025/11/12/推荐游戏/index.html",
     "public/2025/11/12/Untitled/index.html",
-    "public/2025/11/12/源代码/index.html",
     "public/images/607b063b2df3eQNE.gif",
     "source/images/607b063b2df3eQNE.gif",
     "images/607b063b2df3eQNE.gif",
