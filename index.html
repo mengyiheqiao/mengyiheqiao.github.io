@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>jiayu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>jiayu - 面朝大海 栖息之地</title><meta name="author" content="chenyu"><meta name="copyright" content="chenyu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
 <meta property="og:title" content="jiayu">
 <<<<<<< HEAD
 <meta property="og:url" content="http://example.com/index.html">
@@ -16,45 +8,162 @@
 <meta property="og:url" content="https://mengyiheqiao.github.io/index.html">
 <meta property="og:site_name" content="jiayu">
 <meta property="og:locale" content="zh_CN">
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
+<meta property="og:image" content="https://mengyiheqiao.github.io/images/22.jpg">
 >>>>>>> origin/main
 <meta property="article:author" content="chenyu">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="jiayu" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
-
-<meta name="generator" content="Hexo 8.1.1"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">jiayu</a>
-      </h1>
+<meta name="twitter:image" content="https://mengyiheqiao.github.io/images/22.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "jiayu",
+  "alternateName": [
+    "面朝大海 栖息之地",
+    "mengyiheqiao.github.io"
+  ],
+  "url": "https://mengyiheqiao.github.io/"
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mengyiheqiao.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
       
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">面朝大海 栖息之地</a>
-        </h2>
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'jiayu',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">jiayu</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">jiayu</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/13/%E5%90%90%E6%A7%BD/" title="吐槽">吐槽</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-13T10:20:05.016Z" title="发表于 2025-11-13 18:20:05">2025-11-13</time></span></div><div class="content">晚上跟室友讨论了一下学校的饭菜真不是要求高筛选下来真没剩几个店了，当然我也理解开店的人，虽然学校人口基数庞大消费者多但是竞争对手也是真多啊；每个人绞尽脑子把客人引入到自己店里，有时你走去一楼那简直就是菜市场，客户都是靠抢的！如果你不去呦呵，那你就会被饿死。看似和平的校园处处是战场啊。那么又解法吗？不好说，毕竟如果算敌人的话不仅有竞争对手还有他的上级-学校，甚至是消费者！消费者能够与生意人双赢吗？我觉得不太可能，据我所知已经有不少店家倒闭了，甚至有几家是我名单上记录。很好，再也吃不到实惠的了，当店家别平台压榨，这里的损失靠谁接着？我想得转向消费者了。 </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/13/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97index%E4%BA%8B%E4%BB%B6/" title="index 事件">index 事件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-13T03:01:50.000Z" title="发表于 2025-11-13 11:01:50">2025-11-13</time></span></div><div class="content">由于WARN No layout: index.html引起的blog崩溃现已经修复成功                     25/11/13  后记：天意发力了！物理课点名点到我了八嘎很庆幸在原有文件夹里我保留了一个blog的雏形，这才使得我一步一步排查出问题，ai并非靠谱有时甚至是智障无法做到灵活。看来无论什么项目都应该做一个保留呢 </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/11/%E6%BA%90%E4%BB%A3%E7%A0%81/" title="源代码">源代码</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-11T04:54:29.000Z" title="发表于 2025-11-11 12:54:29">2025-11-11</time></span></div><div class="content">关于人性本质的讨论，历来众说纷纭。然而，人性如此复杂，岂是“善”“恶”二词能够简单概括？这两个抽象概念本身就不具体，且随着视角转换而不断变化。同一行为，在不同情境下可能获得截然相反的评价。因此，我们需要超越这种简单的二元对立，探寻更深层的真相。 若必须给出一个答案，我更倾向于认为人性本“空”。这里的“空”不是指虚无，而是指蕴含着向多种方向发展的潜能。有人主张“人本自私”，这个观点同样具有其合理性。究其根源，或许与我们接受的教育方式有关：从小到大，我们习惯了每个问题都有“标准答案”，这种思维定式让我们在面对复杂的人性问题时，也不由自主地期待一个确切的解答。 如果要描述善，我们可以举出许多动人的画面：战场上彼此托付后背的信任，帮助他人时获得的满足，跌倒时伸来的援手，家庭中感受到的温暖。而要描述恶，我们也毫不费力：小人之间的算计，为利益损人利己的行为。《三字经》中说“人之初，性本善”，但若人性本善，又为何需要反复强调呢？ 这些观点各有其道理。作为一个在两个世界都生活过的人，我认为无论主张本善还是本恶，都是从特定角度看到的真相。 然而，拥有两种对立的思想是痛苦的，特别是当你还不能完全驾驭...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/11/Untitled/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-11T02:00:57.000Z" title="发表于 2025-11-11 10:00:57">2025-11-11</time></span></div><div class="content">去你妈的知乎 刚有起色又删我评论nmsl </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/09/%E6%8E%A8%E8%8D%90%E6%B8%B8%E6%88%8F/" title="真正的男人，只有在了解一切之后才可以落下眼泪">真正的男人，只有在了解一切之后才可以落下眼泪</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-09T15:53:32.000Z" title="发表于 2025-11-09 23:53:32">2025-11-09</time></span></div><div class="content">推荐一个最近在玩的推理游戏《逆转裁判1-3》！！！！！！！！！！！！！！真的非常好玩！！！！！！真的非常好玩！！！！！！真的非常好玩啊！！！！！ 认赌服输在玩1的时候卡关了一次，当我推出了所有可能性然后不对去查攻略得知答案大喊卧槽；属实没想到是这个证物真就有点欧亨式那味恨不得抽自己几个大嘴巴子 《逆转裁判:三部曲合集》是一款由CAPCOM公司发行的一款推理辩证文字冒险游戏。玩家将扮演主人公新晋律师成步堂，在迷雾重重的案件中，抽丝剥茧，找寻关键证据给狡猾的被告嫌疑人定罪。该系列最早于2001年登入GBA平台，如今三部曲合集完整收入了成步堂合集，并把更精美的画面带上PC平台，喜欢的玩家不容错过。9.5&#x2F;10（支持繁简中文） </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/08/%E5%8F%8D%E5%A4%8D%E5%88%A0%E9%99%A4%E5%9B%9E%E7%AD%94%E7%9A%84%E5%B1%91%E7%9F%A5%E4%B9%8E/" title="反复删除回答的屑知乎">反复删除回答的屑知乎</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-08T06:43:08.000Z" title="发表于 2025-11-08 14:43:08">2025-11-08</time></span></div><div class="content">今早登上知乎时发现有红点未读，打开一看是两条关于违规回答删除通知。好家伙这么不尊重别人的劳动成果嘛&#x2F;(ㄒoㄒ)&#x2F;~~ 问题是平台反复鞭尸是马哥意思，我发现11月3号时删了一次然后貌似放出来了，结果昨天又删了一次。真的很无语 有意思的是好像不是我回答违规，是问题违规！更有意思的是上面好像在博弈一会放出来一会又封掉反复鞭尸。果然在别人平台就该受制于人啊。 原问题是”如何评价清华姚班李新野的《人妻约会指南》？“ </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/06/%E6%97%A0%E8%81%8A%20or%E4%B8%8E%E8%99%9A%E6%97%A0%E6%97%A7%E6%83%85%E5%A4%8D%E7%87%83%EF%BC%9F/" title="无聊 or与虚无旧情复燃">无聊 or与虚无旧情复燃</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-06T13:44:08.000Z" title="发表于 2025-11-06 21:44:08">2025-11-06</time></span></div><div class="content">无聊无聊 好无聊（找不到事情做的belike）好在当我无聊时总有一个老朋友陪在我身边——虚无我已经数不清多少次跟这家伙打交道了，他总是在我空虚时趁机而入我已经习惯他的出现。这一次也不例外，当我处理完最近的事情后将jiayu与obsidian结合后，由于并没有找到接下来做的事情达到无缝衔接恩马哈，就这样了。嗯~ o(￣▽￣)o 择日不如撞日那就浅聊一下我认识的虚无吧 虚无具有普遍性虽然我很想学习教员的“矛盾论”论证思路但奈何才疏学浅学不来（好耶又给自己找到一件事情做）在我看来，虚无这家伙，简直是个无处不在的“全职室友”。可以说，没有虚无，这个世界反而不完整了。尤其是人来说，无论是谁总会存在某个时间段n或者在具体一点，当自身的能量值低于某个临界点时——就会自动切换到“虚无模式”。虚无的表现有很多比如胡思乱想，心情低落，缺乏意义等等。其实虚无是个不错的朋友但是似乎大家都不是很喜欢他大概率是他带来的负面东西偏多吧。 关于应当一些方法（如果你要摆脱的话）重点应该是认识和识别如同两军打战首先你得先认识他到底什么是虚无，什么又是虚无主义；所谓知己知彼百战不殆嘛。识别是指你要清楚自己陷入虚无了，...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/05/%E7%83%A6%E5%BF%83%E4%BA%8B%E2%80%94%E2%80%94%E5%AD%98%E9%92%B1/" title="烦心事——有关银行">烦心事——有关银行</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-05T11:34:29.000Z" title="发表于 2025-11-05 19:34:29">2025-11-05</time></span></div><div class="content">说起来，银行作为众所周知的存钱机构，一直被看作是守护财富、促进资金流动的经济基石。可最近我用银行卡买东西，却被告知“超出单笔限额”；我不死心，想一笔一笔转出来，它又提示“已达单日限额”。这不是闹着玩吗？ 于是我联系银行，问有没有解决办法。答案倒是有一个——提额。可这简直是治标不治本。更离谱的是，提额还要申请，得等1到7个工作日才有答复。我的天，这也太麻烦了吧？万一哪天我急用钱，却取不出来，那不就尴尬了？ 回头想想，我作为一个学生，对资金的需求其实就两点：一是安全，二是方便。 银行确实做到了第一点，但第二点简直为零。相比之下，某宝这类工具随取随存，设定灵活，甚至还有利息，对学生来说友好多了。 至于安全性，某宝或许确实比不上银行，但对资金量不大的学生而言，它其实是个不错的选择。 我也曾考虑过加密货币但是那个在中国其实并不是很实用，而且他的波段性（我将其定义为在一个波段内反复震动）很不稳定。 这么一比，某宝反而成了现阶段最适合我的选择。 </div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2025/11/04/%E5%BE%88%E9%AB%98%E5%85%B4%E8%AE%A4%E8%AF%86%E4%BD%A0jiayu/" title="很高兴认识你jiayu">很高兴认识你jiayu</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-04T14:55:57.000Z" title="发表于 2025-11-04 22:55:57">2025-11-04</time></span></div><div class="content">开一个新帖子，或许是记录生活，或许是分享知识也或者是找到那个小孩…原因有很多。 其实我早有写blog想法但一直以来一直没有付出实践，直到今日我才创建了jiayu。不过时间总是回不去的不是吗？从现在开始就不晚。 那么从今天就认识jiayu，很高兴认识你！ </div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">chenyu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/13/%E5%90%90%E6%A7%BD/" title="吐槽">吐槽</a><time datetime="2025-11-13T10:20:05.016Z" title="发表于 2025-11-13 18:20:05">2025-11-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/13/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97index%E4%BA%8B%E4%BB%B6/" title="index 事件">index 事件</a><time datetime="2025-11-13T03:01:50.000Z" title="发表于 2025-11-13 11:01:50">2025-11-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/11/%E6%BA%90%E4%BB%A3%E7%A0%81/" title="源代码">源代码</a><time datetime="2025-11-11T04:54:29.000Z" title="发表于 2025-11-11 12:54:29">2025-11-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/11/Untitled/" title="Untitled">Untitled</a><time datetime="2025-11-11T02:00:57.000Z" title="发表于 2025-11-11 10:00:57">2025-11-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/11/09/%E6%8E%A8%E8%8D%90%E6%B8%B8%E6%88%8F/" title="真正的男人，只有在了解一切之后才可以落下眼泪">真正的男人，只有在了解一切之后才可以落下眼泪</a><time datetime="2025-11-09T15:53:32.000Z" title="发表于 2025-11-09 23:53:32">2025-11-09</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E8%A7%84%E5%88%99/" style="font-size: 1.3em; color: #99a1ac">规则</a> <a href="/tags/%E5%BC%80%E5%A7%8B/" style="font-size: 1.1em; color: #999">开始</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 1.3em; color: #99a1ac">博客</a> <a href="/tags/%E5%90%90%E6%A7%BD/" style="font-size: 1.3em; color: #99a1ac">吐槽</a> <a href="/tags/%E6%A0%A1%E5%9B%AD/" style="font-size: 1.1em; color: #999">校园</a> <a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.1em; color: #999">游戏</a> <a href="/tags/%E5%93%B2%E5%AD%A6/" style="font-size: 1.3em; color: #99a1ac">哲学</a> <a href="/tags/%E7%9F%A5%E4%B9%8E/" style="font-size: 1.3em; color: #99a1ac">知乎</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 1.5em; color: #99a9bf">生活</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
       
     </div>
+<<<<<<< HEAD
     <div id="header-inner" class="inner">
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
@@ -133,30 +242,57 @@
       </header>
     
     <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>说起来，银行作为众所周知的存钱机构，一直被看作是守护财富、促进资金流动的经济基石。可最近我用银行卡买东西，却被告知“超出单笔限额”；我不死心，想一笔一笔转出来，它又提示“已达单日限额”。这不是闹着玩吗？</p>
-<p>于是我联系银行，问有没有解决办法。答案倒是有一个——提额。可这简直是治标不治本。更离谱的是，提额还要申请，得等1到7个工作日才有答复。我的天，这也太麻烦了吧？万一哪天我急用钱，却取不出来，那不就尴尬了？</p>
-<p>回头想想，我作为一个学生，对资金的需求其实就两点：<br>一是安全，<br>二是方便。</p>
-<p>银行确实做到了第一点，但第二点简直为零。相比之下，某宝这类工具随取随存，设定灵活，甚至还有利息，对学生来说友好多了。</p>
-<p>至于安全性，某宝或许确实比不上银行，但对资金量不大的学生而言，它其实是个不错的选择。</p>
-<p>我也曾考虑过加密货币但是那个在中国其实并不是很实用，而且他的波段性（我将其定义为在一个波段内反复震动）很不稳定。</p>
-<p>这么一比，某宝反而成了现阶段最适合我的选择。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://mengyiheqiao.github.io/2025/11/12/%E7%83%A6%E5%BF%83%E4%BA%8B%E2%80%94%E2%80%94%E5%AD%98%E9%92%B1/" data-id="cuidmwfiLdcojBzalCGRz7u1_" data-title="烦心事——有关银行" class="article-share-link"><span class="fa fa-share">分享</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB/" rel="tag">生活</a></li></ul>
-
-    </footer>
-  </div>
+=======
   
-</article>
+    <ul class="card-archive-list">
+>>>>>>> origin/main
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/11/">
+            <span class="card-archive-list-date">
+              十一月 2025
+            </span>
+            <span class="card-archive-list-count">9</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">9</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-11-13T13:16:30.644Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By chenyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = ["离开有你的季节，为的不止是寻觅"].slice()
 
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
 
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+<<<<<<< HEAD
 
   
     <article id="post-源代码" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
@@ -772,3 +908,17 @@
   </div>
 </body>
 </html>
+=======
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  typedJSFn.processSubtitle(["离开有你的季节，为的不止是寻觅"])
+}
+typedJSFn.run(subtitleType)</script></div><script src="https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js"></script><script async data-pjax src="/"></script></div></body></html>
+>>>>>>> origin/main

@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "吐槽"
             }
+          },
+          {
+            "id": "165f969442de2a69",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "source/_posts/很高兴认识你jiayu.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "很高兴认识你jiayu"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -192,38 +207,41 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1086e79a3e3560f5",
+  "active": "165f969442de2a69",
   "lastOpenFiles": [
-    "source/_posts/更新日志index事件.md",
+    "conflict-files-obsidian-git.md",
     "source/_posts/吐槽.md",
-    "source/_posts/推荐游戏.md",
-    "source/_posts/很高兴认识你jiayu.md",
-    "source/_posts/反复删除回答的屑知乎.md",
-    "source/_posts/无聊 or与虚无旧情复燃？.md",
+    "tags/校园/index.html",
+    "tags/校园",
+    "shuoshuo/index.html",
+    "shuoshuo",
+    "js/utils.js",
+    "js/tw_cn.js",
+    "js/search/algolia.js",
+    "js/search/local-search.js",
+    "js/search",
+    "js/main.js",
+    "img/error-page.png",
+    "img/friend_404.gif",
+    "img/404.jpg",
+    "img/butterfly-icon.png",
+    "images/15.jpg",
     "source/_posts/Untitled.md",
+    "source/_posts/更新日志index事件.md",
+    "source/_posts/推荐游戏.md",
+    "source/_posts/反复删除回答的屑知乎.md",
     "source/_posts/烦心事——存钱.md",
     "source/_posts/源代码.md",
-    "conflict-files-obsidian-git.md",
-    "未命名.base",
-    "未命名 1.base",
+    "source/_posts/无聊 or与虚无旧情复燃？.md",
+    "source/_posts/很高兴认识你jiayu.md",
     "关停大脑.md",
     "1.jpg",
     "607b063b2df3eQNE.gif",
     "source/_obsidian/Post Template.md",
-    "db.json",
-    "public/CNAME",
-    "public/index.html",
-    "public/2025/11/04/很高兴认识你jiayu/index.html",
-    "public/2025/11/12/烦心事——存钱/index.html",
-    "public/2025/11/12/无聊 or与虚无旧情复燃？/index.html",
-    "public/2025/11/12/推荐游戏/index.html",
-    "public/2025/11/12/Untitled/index.html",
     "public/images/607b063b2df3eQNE.gif",
     "source/images/607b063b2df3eQNE.gif",
     "images/607b063b2df3eQNE.gif",
-    "public/css/images/banner.jpg",
     "source/image/未命名.md",
-    "css/images/banner.jpg",
     "scaffolds/page.md",
     "scaffolds/draft.md",
     "scaffolds/post.md"
