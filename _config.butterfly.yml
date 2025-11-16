@@ -1135,3 +1135,10 @@ option:
     # valine:
     # waline_css:
     # waline_js:
+
+
+
+
+
+live2d:  
+	enable: true

@@ -3,6 +3,7 @@ title: index 事件
 date: 2025-11-13 11:01:50
 tags:
   - 博客
+  - 崩溃
 ---
 由于WARN No layout: index.html引起的blog崩溃现已经修复成功
 
