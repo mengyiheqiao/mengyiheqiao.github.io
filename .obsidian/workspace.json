@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "189d75748d6812d2",
+        "id": "f732b0bbb67e2342",
         "type": "tabs",
         "children": [
           {
-            "id": "165f969442de2a69",
+            "id": "8baaf057e7ae43fe",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "source/_posts/Untitled.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Untitled"
+              "title": "新标签页"
             }
           }
         ]
@@ -192,28 +188,31 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "165f969442de2a69",
+  "active": "8baaf057e7ae43fe",
   "lastOpenFiles": [
-    "source/_posts/吐槽.md",
-    "source/_posts/Untitled.md",
-    "source/_posts/无聊 or与虚无旧情复燃？.md",
     "source/_posts/更新日志index事件.md",
+    "source/_posts/Untitled.md",
+    "conflict-files-obsidian-git.md",
+    "tags/崩溃/index.html",
+    "tags/崩溃",
+    "live2d-widget/build/cubism2/utils/ModelSettingJson.js",
+    "live2d-widget/build/cubism2/utils/ModelSettingJson.d.ts",
+    "live2d-widget/src/cubism2/utils/ModelSettingJson.js",
+    "live2d-widget/src/cubism2/utils/MatrixStack.js",
+    "live2d-widget/build/cubism2/utils/MatrixStack.d.ts",
+    "live2d-widget/build/cubism2/utils/MatrixStack.js",
+    "live2d-widget/src/types/window.d.ts",
+    "live2d-widget/src/types/live2dApi.d.ts",
+    "live2d-widget/demo/screenshots/screenshot-3.png",
+    "live2d-widget/demo/screenshots/screenshot-2.png",
+    "live2d-widget/demo/screenshots/screenshot-1.png",
+    "source/_posts/吐槽.md",
+    "source/_posts/无聊 or与虚无旧情复燃？.md",
     "source/_posts/源代码.md",
     "source/_posts/烦心事——存钱.md",
     "source/_posts/反复删除回答的屑知乎.md",
     "source/_posts/推荐游戏.md",
     "source/_posts/很高兴认识你jiayu.md",
-    "conflict-files-obsidian-git.md",
-    "tags/校园/index.html",
-    "tags/校园",
-    "shuoshuo/index.html",
-    "shuoshuo",
-    "js/utils.js",
-    "js/tw_cn.js",
-    "js/search/algolia.js",
-    "js/search/local-search.js",
-    "js/search",
-    "js/main.js",
     "img/error-page.png",
     "img/friend_404.gif",
     "img/404.jpg",
@@ -223,9 +222,6 @@
     "1.jpg",
     "607b063b2df3eQNE.gif",
     "source/_obsidian/Post Template.md",
-    "public/images/607b063b2df3eQNE.gif",
-    "source/images/607b063b2df3eQNE.gif",
-    "images/607b063b2df3eQNE.gif",
     "source/image/未命名.md",
     "scaffolds/page.md",
     "scaffolds/draft.md",

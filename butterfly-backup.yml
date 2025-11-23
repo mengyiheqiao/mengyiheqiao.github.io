@@ -18,12 +18,10 @@ nav:
   fixed: false
 
 menu:
-     主页: / || fas fa-home
-     归档: /archives/ || fas fa-archive
-     标签: /tags/ || fas fa-tags
-     List||fas fa-list:
-       Music: /music/ || fas fa-music
-       Movie: /movies/ || fas fa-video
+  # Home: / || fas fa-home
+  # List||fas fa-list:
+  #   Music: /music/ || fas fa-music
+  #   Movie: /movies/ || fas fa-video
 
 # --------------------------------------
 # Code Blocks Settings
@@ -58,14 +56,14 @@ social:
 favicon: /img/favicon.png
 
 avatar:
-  img:  /img/22.jpg
+  img: /img/butterfly-icon.png
   effect: false
 
 # Disable all banner images
 disable_top_img: false
 
 # If the banner of page not setting, it will show the default_top_img
-default_top_img: /img/15.jpg
+default_top_img:
 
 # The banner image of index page
 index_img:
@@ -94,7 +92,7 @@ footer_img: false
 
 # Website Background
 # Can set it to color or image url
-background: /img/15.jpg
+background:
 
 cover:
   # Disable the cover or not
@@ -150,11 +148,9 @@ index_top_img_height:
 
 # The subtitle on homepage
 subtitle:
-  enable: true
+  enable: false
   # Typewriter Effect
   effect: true
-  # loop 
-  loop: true
   # Customize typed.js
   # https://github.com/mattboldt/typed.js/#customization
   typed_option:
@@ -168,7 +164,6 @@ subtitle:
   source: false
   # If you close the typewriter effect, the subtitle will only show the first line of sub
   sub:
-    - 离开有你的季节，为的不止是寻觅
 
 # Article layout on the homepage
 # 1: Cover on the left, info on the right
@@ -536,14 +531,14 @@ comments:
   # Leave it empty if you don't need comments
   # Choose: Disqus/Disqusjs/Livere/Gitalk/Valine/Waline/Utterances/Facebook Comments/Twikoo/Giscus/Remark42/Artalk
   # Format of two comments system : Disqus,Waline
-  use: Valine
+  use:
   # Display the comment name next to the button
   text: true
   # Lazyload: The comment system will be load when comment element enters the browser's viewport.
   # If you set it to true, the comment count will be invalid
-  lazyload: true
+  lazyload: false
   # Display comment count in post's top_img
-  count: true
+  count: false
   # Display comment count in Home Page
   card_post_count: false
 
@@ -579,17 +574,15 @@ gitalk:
 # Valine
 # https://valine.js.org
 valine:
-  enable: true                    
-  appId: TW0GmZfqrSURslq3EjQXlURa-gzGzoHsz
-  appKey: PjBN3z0v4lHZHOeNxaTtga0t
-  serverURLs: https://tw0gmzfq.lc-cn-n1-shared.com
-  avatar: monsterid              
-  placeholder: (。・∀・)ノ )      
-  guest_info: nick,mail,link     
-  pageSize: 10                  
-  notify: false                  
-  verify: false                  
+  appId:
+  appKey:
+  avatar: monsterid
+  # This configuration is suitable for domestic custom domain name users, overseas version will be automatically detected (no need to manually fill in)
+  serverURLs:
+  bg:
+  # Use Valine visitor count as the page view count
   visitor: false
+  option:
 
 # Waline - A simple comment system with backend support fork from Valine
 # https://waline.js.org/
@@ -789,7 +782,7 @@ tag_ui:
 rounded_corners_ui: true
 
 # Stretches the lines so that each line has equal width
-text_align_justify: true
+text_align_justify: false
 
 # Add a mask to the header and footer
 mask:
@@ -798,13 +791,13 @@ mask:
 
 # Loading Animation
 preloader:
-  enable: true
+  enable: false
   # source
   # 1. fullpage-loading
   # 2. pace (progress bar)
-  source: 2
+  source: 1
   # pace theme (see https://codebyzach.github.io/pace/)
-  pace_css_url:  /css/center-atom.css
+  pace_css_url:
 
 # Page Transition
 enter_transitions: true
@@ -814,13 +807,13 @@ display_mode: light
 
 # Configuration for beautifying the content of the article
 beautify:
-  enable: true
+  enable: false
   # Specify the field to beautify (site or post)
-  field: site
+  field: post
   # Specify the icon to be used as a prefix for the title, such as '\f0c1'
-  title_prefix_icon: '\f0c1'
+  title_prefix_icon:
   # Specify the color of the title prefix icon, such as '#F47466'
-  title_prefix_icon_color: '#F47466'
+  title_prefix_icon_color:
 
 # Global font settings
 # Don't modify the following settings unless you know how they work
@@ -845,7 +838,7 @@ hr_icon:
 # Typewriter Effect
 # https://github.com/disjukr/activate-power-mode
 activate_power_mode:
-  enable: true
+  enable: false
   colorful: true
   shake: true
   mobile: false
@@ -897,15 +890,14 @@ click_heart:
 
 # Mouse click effects: words
 clickShowText:
-  enable: true
+  enable: false
   text:
-     - freedom
-     - 自由
-     - I love you
-     - 将军
+    # - I
+    # - LOVE
+    # - YOU
   fontSize: 15px
   random: false
-  mobile: true
+  mobile: false
 
 # --------------------------------------
 # Lightbox Settings
@@ -1059,12 +1051,11 @@ css_prefix: true
 # Inject
 # Insert the code to head (before '</head>' tag) and the bottom (before '</body>' tag)
 inject:
-  head: 
-    - <link rel="stylesheet" href="/css/myStyle.css">
-    
+  head:
+    # - <link rel="stylesheet" href="/xxx.css">
   bottom:
-    - <script src="https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js"></script>
-      
+    # - <script src="xxxx"></script>
+
 # CDN Settings
 # Don't modify the following settings unless you know how they work
 CDN:
@@ -1080,9 +1071,9 @@ CDN:
 
   # Custom format
   # For example: https://cdn.staticfile.org/${cdnjs_name}/${version}/${min_cdnjs_file}
-custom_format:
+  custom_format:
 
-option:
+  option:
     # abcjs_basic_js:
     # activate_power_mode:
     # algolia_js:
@@ -1137,10 +1128,3 @@ option:
     # valine:
     # waline_css:
     # waline_js:
-
-
-
-
-
-live2d:  
-	enable: true
