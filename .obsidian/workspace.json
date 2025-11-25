@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/吐槽.md",
+                "file": "source/_posts/Untitled 1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "吐槽"
+              "title": "Untitled 1"
             }
           }
         ]
@@ -192,9 +192,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "43d9bc1624547fab",
+  "active": "8baaf057e7ae43fe",
   "lastOpenFiles": [
     "source/_posts/吐槽.md",
+    "source/_posts/Untitled 1.md",
     "conflict-files-obsidian-git.md",
     "tags/index.html",
     "search.json",
