@@ -1,0 +1,193 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+.rain-sunshine-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+/* 天空背景渐变 */
+.sky-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #2c3e50 0%, #3498db 100%);
+    transition: background 3s ease;
+}
+
+/* 云层样式 */
+.clouds {
+    position: absolute;
+    width: 100%;
+    height: 40%;
+    top: 10%;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    filter: blur(5px);
+    opacity: 0.7;
+}
+
+.cloud-1 {
+    width: 120px;
+    height: 60px;
+    top: 20%;
+    left: 10%;
+    animation: floatCloud 20s linear infinite;
+}
+
+.cloud-2 {
+    width: 150px;
+    height: 70px;
+    top: 10%;
+    left: 50%;
+    animation: floatCloud 25s linear infinite;
+}
+
+.cloud-3 {
+    width: 100px;
+    height: 50px;
+    top: 25%;
+    left: 80%;
+    animation: floatCloud 30s linear infinite;
+}
+
+@keyframes floatCloud {
+    0% { transform: translateX(-100px); }
+    100% { transform: translateX(calc(100vw + 100px)); }
+}
+
+/* 雨滴层 */
+.rain-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.raindrop {
+    position: absolute;
+    width: 2px;
+    height: 15px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        rgba(255, 255, 255, 0.4) 100%);
+    border-radius: 50% 50% 40% 40%;
+    animation: fall linear forwards;
+    filter: blur(0.5px);
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* 阳光光束 */
+.sunbeams {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.beam {
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 200, 0.3),
+        transparent
+    );
+    filter: blur(10px);
+    transform: skewX(-20deg);
+}
+
+.beam-1 {
+    left: 20%;
+    animation: beamShine 4s ease-in-out infinite;
+}
+
+.beam-2 {
+    left: 50%;
+    animation: beamShine 4s ease-in-out 1s infinite;
+}
+
+.beam-3 {
+    left: 80%;
+    animation: beamShine 4s ease-in-out 2s infinite;
+}
+
+@keyframes beamShine {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+/* 进度文字 */
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 10;
+}
+
+.percentage {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.status {
+    font-size: 1.2rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+/* 加载完成状态 */
+.loading-complete .sky-background {
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FF 100%);
+}
+
+.loading-complete .cloud {
+    opacity: 0.4;
+    animation-duration: 40s;
+}
+
+.loading-complete .sunbeams {
+    opacity: 1;
+}
+
+.loading-complete .percentage {
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
