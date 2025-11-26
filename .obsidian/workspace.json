@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "source/_posts/回来了.md",
+                "file": "source/_posts/deepseek提问方法（转载）.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "回来了"
+              "title": "deepseek提问方法（转载）"
             }
           }
         ]
@@ -124,12 +124,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/回来了.md",
+                "file": "source/_posts/deepseek提问方法（转载）.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "回来了 的出链列表"
+              "title": "deepseek提问方法（转载） 的出链列表"
             }
           },
           {
@@ -153,13 +153,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "source/_posts/回来了.md",
+                "file": "source/_posts/deepseek提问方法（转载）.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "回来了 的大纲"
+              "title": "deepseek提问方法（转载） 的大纲"
             }
           },
           {
@@ -173,7 +173,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -192,13 +192,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "23a840e4f8f73bf5",
+  "active": "43d9bc1624547fab",
   "lastOpenFiles": [
+    "source/_posts/Untitled.md",
+    "source/_posts/（总结）deepseek使用方法.md",
+    "source/_posts/deepseek提问方法（转载）.md",
+    "source/_posts/回来了.md",
     "2025/11/25/回来了/index.html",
     "2025/11/25/回来了",
     "2025/11/25",
     "source/_posts/吐槽.md",
-    "source/_posts/回来了.md",
     "conflict-files-obsidian-git.md",
     "tags/index.html",
     "search.json",
@@ -212,13 +215,11 @@
     "css/rain-loader.css",
     "css/myStyle.css",
     "source/_posts/烦心事——存钱.md",
-    "source/_posts/Untitled.md",
     "source/_posts/推荐游戏.md",
     "source/_posts/反复删除回答的屑知乎.md",
     "source/_posts/源代码.md",
     "source/_posts/更新日志index事件.md",
     "source/_posts/有关重走来时路.md",
-    "tags/崩溃/index.html",
     "live2d-widget/demo/screenshots/screenshot-3.png",
     "live2d-widget/demo/screenshots/screenshot-2.png",
     "live2d-widget/demo/screenshots/screenshot-1.png",
