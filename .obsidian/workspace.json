@@ -105,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "scaffolds/draft.md",
+                "file": "source/_posts/回来了.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "draft 的反向链接列表"
+              "title": "回来了 的反向链接列表"
             }
           },
           {
@@ -124,12 +124,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "未命名 1.base",
+                "file": "source/_posts/回来了.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "未命名 1 的出链列表"
+              "title": "回来了 的出链列表"
             }
           },
           {
@@ -153,13 +153,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名 1.base",
+                "file": "source/_posts/回来了.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "未命名 1 的大纲"
+              "title": "回来了 的大纲"
             }
           },
           {
@@ -173,7 +173,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -192,7 +192,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8baaf057e7ae43fe",
+  "active": "23a840e4f8f73bf5",
   "lastOpenFiles": [
     "2025/11/25/回来了/index.html",
     "2025/11/25/回来了",
