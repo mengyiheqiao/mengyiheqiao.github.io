@@ -1,5 +1,5 @@
 ---
-title: （转载）deepseek使用方法
+title: （总结）deepseek使用方法
 date: 2025-11-26 15:53：10
 tags:
   - 方法
