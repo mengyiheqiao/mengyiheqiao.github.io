@@ -75,7 +75,7 @@
             }
           },
           {
-            "id": "996bcefab87b8be1",
+            "id": "39a7cba72217f0ab",
             "type": "leaf",
             "state": {
               "type": "file-tree-view",
@@ -171,19 +171,9 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
-          },
-          {
-            "id": "032e4f758ac5e009",
-            "type": "leaf",
-            "state": {
-              "type": "mermaid-toolbar-view",
-              "state": {},
-              "icon": "trident-custom",
-              "title": "Mermaid Toolbar"
-            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -203,8 +193,25 @@
       "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "032e4f758ac5e009",
+  "active": "d60d01f4decb0eec",
   "lastOpenFiles": [
+    "source/_posts/Untitled 1.md",
+    "source/_posts/无聊 or与虚无旧情复燃？.md",
+    "source/_posts/更新日志index事件.md",
+    "source/_posts/推荐游戏.md",
+    "source/_posts/很高兴认识你jiayu.md",
+    "source/_posts/回来了.md",
+    "source/_posts/吐槽.md",
+    "source/_posts/源代码.md",
+    "source/_posts/诗歌.md",
+    "source/_posts/闭合与开放1.md",
+    "source/_posts/近代史复习引发的认知策略反思.md",
+    "source/_posts/游玩.md",
+    "source/_posts/（总结）deepseek使用方法.md",
+    "source/_posts/deepseek提问方法（转载）.md",
+    "source/_posts/8月27日.md",
+    "source/_posts/Untitled.md",
+    "source/_posts/七海表情包.md",
     "tags/乱七八糟/index.html",
     "tags/乱七八糟",
     "page/3/index.html",
@@ -215,31 +222,13 @@
     "archives/page/3/index.html",
     "archives/page/3",
     "2025/12/26/Untitled 1/index.html",
-    "2025/12/26/Untitled 1",
-    "source/_posts/Untitled 1.md",
-    "source/_posts/七海表情包.md",
     "conflict-files-obsidian-git.md",
     "source/_posts/敬畏心.md",
     "source/_posts/攻击.md",
-    "source/_posts/推荐游戏.md",
     "source/_posts/月花蝉，灿星河.md",
     "source/_posts/烦心事——存钱.md",
-    "source/_posts/无聊 or与虚无旧情复燃？.md",
-    "source/_posts/诗歌.md",
-    "source/_posts/吐槽.md",
-    "source/_posts/回来了.md",
     "source/_posts/反复删除回答的屑知乎.md",
-    "source/_posts/8月27日.md",
-    "source/_posts/Untitled.md",
     "source/_posts/休息日.md",
-    "source/_posts/（总结）deepseek使用方法.md",
-    "source/_posts/deepseek提问方法（转载）.md",
-    "source/_posts/很高兴认识你jiayu.md",
-    "source/_posts/更新日志index事件.md",
-    "source/_posts/游玩.md",
-    "source/_posts/源代码.md",
-    "source/_posts/近代史复习引发的认知策略反思.md",
-    "source/_posts/闭合与开放1.md",
     "2025-12-26.md",
     "img/607b063b2df3eQNE.gif",
     "img/22.jpg",
