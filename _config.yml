@@ -50,6 +50,8 @@ highlight:
   tab_replace: ''
   wrap: true
   hljs: false
+  exclude_languages: 
+    - mermaid
 prismjs:
   preprocess: true
   line_number: true
@@ -103,3 +105,8 @@ deploy:
   type: git
   repo: git@github.com:mengyiheqiao/mengyiheqiao.github.io.git
   branch: main
+
+# APlayer 配置
+aplayer:
+  enable: true
+  asset_inject: false  

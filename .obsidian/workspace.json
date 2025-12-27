@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "f732b0bbb67e2342",
+        "id": "385e0f630890f2c0",
         "type": "tabs",
         "children": [
           {
-            "id": "8baaf057e7ae43fe",
+            "id": "d60d01f4decb0eec",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -105,17 +105,17 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "source/_posts/回来了.md",
+                "file": "source/_posts/Untitled 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
-                "backlinkCollapsed": false,
+                "backlinkCollapsed": true,
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "回来了 的反向链接列表"
+              "title": "Untitled 1 的反向链接列表"
             }
           },
           {
@@ -124,12 +124,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/闭合与开放1.md",
+                "file": "source/_posts/Untitled 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "闭合与开放1 的出链列表"
+              "title": "Untitled 1 的出链列表"
             }
           },
           {
@@ -171,14 +171,23 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
+          },
+          {
+            "id": "c193a9533dffdaae",
+            "type": "leaf",
+            "state": {
+              "type": "mermaid-toolbar-view",
+              "state": {},
+              "icon": "trident-custom",
+              "title": "Mermaid Toolbar"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -190,56 +199,57 @@
       "command-palette:打开命令面板": false,
       "bases:创建新数据库": false,
       "file-tree-alternative:File Tree Alternative Plugin": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "mermaid-tools:Open Mermaid Toolbar": false
     }
   },
-  "active": "8baaf057e7ae43fe",
+  "active": "d60d01f4decb0eec",
   "lastOpenFiles": [
-    "source/_posts/敬畏心.md",
-    "source/_posts/Untitled 1.md",
-    "tags/攻击/index.html",
-    "tags/攻击",
-    "2025/11/30/攻击/index.html",
-    "2025/11/30/攻击",
-    "2025/11/30",
-    "source/_posts/攻击.md",
-    "source/_posts/休息日.md",
-    "2025/11/29/休息日/index.html",
-    "2025/11/29/休息日",
-    "2025/11/29",
-    "source/_posts/闭合与开放1.md",
-    "休息日",
-    "source/_posts/诗歌.md",
-    "source/_posts/Untitled.md",
-    "source/_posts/8月27日.md",
-    "archives/2023/03/index.html",
-    "source/_posts/deepseek提问方法（转载）.md",
-    "source/_posts/反复删除回答的屑知乎.md",
-    "source/_posts/回来了.md",
-    "source/_posts/月花蝉，灿星河.md",
-    "source/_posts/无聊 or与虚无旧情复燃？.md",
-    "source/_posts/推荐游戏.md",
-    "source/_posts/烦心事——存钱.md",
-    "source/_posts/源代码.md",
-    "source/_posts/（总结）deepseek使用方法.md",
-    "source/_posts/吐槽.md",
-    "source/_posts/很高兴认识你jiayu.md",
-    "source/_posts/学校进程.md",
-    "source/_posts/更新日志index事件.md",
-    "2025-11-27.md",
     "conflict-files-obsidian-git.md",
+    "source/_posts/Untitled 1.md",
+    "source/_posts/敬畏心.md",
+    "source/_posts/攻击.md",
+    "source/_posts/推荐游戏.md",
+    "source/_posts/月花蝉，灿星河.md",
+    "source/_posts/烦心事——存钱.md",
+    "source/_posts/无聊 or与虚无旧情复燃？.md",
+    "source/_posts/诗歌.md",
+    "source/_posts/吐槽.md",
+    "source/_posts/回来了.md",
+    "source/_posts/反复删除回答的屑知乎.md",
+    "source/_posts/8月27日.md",
+    "source/_posts/Untitled.md",
+    "source/_posts/休息日.md",
+    "source/_posts/（总结）deepseek使用方法.md",
+    "source/_posts/deepseek提问方法（转载）.md",
+    "source/_posts/很高兴认识你jiayu.md",
+    "source/_posts/更新日志index事件.md",
+    "source/_posts/游玩.md",
+    "source/_posts/源代码.md",
+    "source/_posts/近代史复习引发的认知策略反思.md",
+    "source/_posts/闭合与开放1.md",
+    "2025-12-26.md",
+    "source/_posts/挫败感——试图与人论气被骂的体无完肤无地自容.md",
+    "未命名.base",
+    "db.json",
+    "source/_posts/乱七八糟的记录.md",
+    "public/tags/乱七八糟/index.html",
+    "public/tags/乱七八糟",
+    "tags/游玩/index.html",
+    "tags/游玩",
+    "archives/2025/12/index.html",
+    "archives/2025/12",
+    "2025/12/06/游玩/index.html",
+    "2025/12/05/敬畏心/index.html",
     "img/607b063b2df3eQNE.gif",
     "img/22.jpg",
     "img/15397446572347712.jpg",
     "img/15.jpg",
-    "source/_posts/有关重走来时路.md",
     "live2d-widget/demo/screenshots/screenshot-3.png",
     "live2d-widget/demo/screenshots/screenshot-2.png",
     "live2d-widget/demo/screenshots/screenshot-1.png",
     "img/error-page.png",
     "img/friend_404.gif",
-    "img/404.jpg",
-    "关停大脑.md",
-    "source/_obsidian/Post Template.md"
+    "img/404.jpg"
   ]
 }

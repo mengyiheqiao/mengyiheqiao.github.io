@@ -169,7 +169,15 @@ subtitle:
   # If you close the typewriter effect, the subtitle will only show the first line of sub
   sub:
     - 离开有你的季节，为的不止是寻觅
-
+    - 出自《神奇的某音律诗歌》
+    - 过去都是假的，回忆没有归路，春天总是一去不返，最疯狂执着的爱情也终究是过眼云烟
+    - 出自 《百年孤独》
+    - 我们一直寻找的，却是自己原本早已拥有的；我们总是东张西望，唯独漏了自己想要的，这就是我们至今难以如愿以偿的原因。
+    - 出自《理想国》
+    - 总有一个地方叫文城。
+    - 出自 《文城》
+    - 马孔多在下雨
+    - 别犯傻了，八月下雨很正常
 # Article layout on the homepage
 # 1: Cover on the left, info on the right
 # 2: Cover on the right, info on the left
@@ -941,7 +949,7 @@ abcjs:
 mermaid:
   enable: false
   # Write Mermaid diagrams using code blocks
-  code_write: false
+  code_write: true
   # built-in themes: default / forest / dark / neutral
   theme:
     light: default
@@ -986,14 +994,14 @@ note:
 
 # https://github.com/MoOx/pjax
 pjax:
-  enable: false
+  enable: true
   # Exclude the specified pages from pjax, such as '/music/'
   exclude:
     # - /xxxxxx/
 
 # Inject the css and script (aplayer/meting)
 aplayerInject:
-  enable: false
+  enable: true
   per_page: true
 
 # Snackbar - Toast Notification
@@ -1063,11 +1071,14 @@ inject:
     - <link rel="stylesheet" href="/css/myStyle.css">
     
   bottom:
+    - <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
+    - <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/meting/2.0.1/Meting.min.js"></script>
     - <script src="https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js"></script>
-      
+    - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div>'  
 # CDN Settings
 # Don't modify the following settings unless you know how they work
 CDN:
+
   # The CDN provider for internal and third-party scripts
   # Options for both: local/jsdelivr/unpkg/cdnjs/custom
   # Note: Dev version can only use 'local' for internal scripts
@@ -1077,6 +1088,9 @@ CDN:
 
   # Add version number to url, true or false
   version: true
+  aplayer_css: https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css
+  aplayer_js: https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js
+  meting_js:   https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/meting/2.0.1/Meting.min.js
 
   # Custom format
   # For example: https://cdn.staticfile.org/${cdnjs_name}/${version}/${min_cdnjs_file}
@@ -1140,7 +1154,6 @@ option:
 
 
 
-
-
 live2d:  
 	enable: true
+
