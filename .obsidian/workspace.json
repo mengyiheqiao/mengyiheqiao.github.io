@@ -124,12 +124,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "source/_posts/Untitled 1.md",
+                "file": "source/_posts/七海表情包.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Untitled 1 的出链列表"
+              "title": "七海表情包 的出链列表"
             }
           },
           {
@@ -173,11 +173,12 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -189,8 +190,7 @@
       "command-palette:打开命令面板": false,
       "bases:创建新数据库": false,
       "file-tree-alternative:File Tree Alternative Plugin": false,
-      "obsidian-git:Open Git source control": false,
-      "mermaid-tools:Open Mermaid Toolbar": false
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "d60d01f4decb0eec",
