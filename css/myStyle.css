@@ -226,6 +226,74 @@ body {
         animation-duration: 25s;
     }
 }
+
+.snow-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.snowflake {
+    position: absolute;
+    top: -12vh;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, rgba(255, 255, 255, 0.96) 45%, rgba(255, 255, 255, 0.18) 100%);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    animation-name: snow-fall, snow-sway;
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: infinite, infinite;
+    will-change: transform, margin-left;
+}
+
+@keyframes snow-fall {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(112vh);
+    }
+}
+
+@keyframes snow-sway {
+    from {
+        margin-left: -10px;
+    }
+
+    to {
+        margin-left: 10px;
+    }
+}
+
+.christmas-avatar-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+.christmas-avatar-wrap > #avatar {
+    display: block;
+}
+
+.christmas-hat {
+    position: absolute;
+    top: -19%;
+    left: 53%;
+    z-index: 2;
+    width: 64%;
+    max-width: none;
+    transform: translateX(-50%) rotate(-13deg);
+    pointer-events: none;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.22));
+}
+
+@media (max-width: 768px) {
+    .christmas-hat {
+        top: -16%;
+        width: 60%;
+    }
+}
 /* 侧边栏公告栏卡片渐变色 */
 #aside-content>.card-widget.card-announcement{
     background: linear-gradient(-45deg, rgba(225,235,255,.6), 
