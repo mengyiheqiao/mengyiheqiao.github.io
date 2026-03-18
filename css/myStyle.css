@@ -227,6 +227,18 @@ body {
     }
 }
 
+.meteor-shower {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0.95;
+}
+
 .snow-layer {
     position: fixed;
     inset: 0;
