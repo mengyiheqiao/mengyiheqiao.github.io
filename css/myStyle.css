@@ -2,52 +2,6 @@
     background: transparent !important;
 }
 
-/* 首页顶部头图 */
-#page-header.full_page {
-    width: min(calc(100% - 32px), 1480px);
-    height: min(68vh, 760px) !important;
-    min-height: 420px;
-    margin: 16px auto 24px;
-    border-radius: 28px;
-    overflow: hidden;
-    box-shadow:
-        0 22px 60px rgba(15, 23, 42, 0.18),
-        0 10px 24px rgba(255, 255, 255, 0.12);
-    isolation: isolate;
-}
-
-#page-header.full_page::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04) 55%),
-        linear-gradient(180deg, rgba(9, 14, 28, 0.08), rgba(9, 14, 28, 0.2));
-    backdrop-filter: blur(6px) saturate(125%);
-    -webkit-backdrop-filter: blur(6px) saturate(125%);
-    pointer-events: none;
-}
-
-#page-header.full_page > #nav,
-#page-header.full_page > #site-info,
-#page-header.full_page > #scroll-down {
-    position: relative;
-    z-index: 2;
-}
-
-[data-theme="dark"] #page-header.full_page {
-    box-shadow:
-        0 24px 64px rgba(0, 0, 0, 0.34),
-        0 12px 28px rgba(30, 41, 59, 0.22);
-}
-
-[data-theme="dark"] #page-header.full_page::after {
-    background:
-        linear-gradient(135deg, rgba(17, 25, 40, 0.34), rgba(17, 25, 40, 0.1) 55%),
-        linear-gradient(180deg, rgba(2, 6, 23, 0.14), rgba(2, 6, 23, 0.34));
-}
-
 body {
     background: url("/img/15.jpg") no-repeat center center fixed !important;
     background-size: cover !important;
@@ -202,108 +156,12 @@ body {
 
 /* 响应式调整 */
 @media (max-width: 768px) {
-    #page-header.full_page {
-        width: calc(100% - 18px);
-        height: 54vh !important;
-        min-height: 320px;
-        margin: 9px auto 18px;
-        border-radius: 20px;
-        box-shadow:
-            0 16px 36px rgba(15, 23, 42, 0.16),
-            0 8px 18px rgba(255, 255, 255, 0.1);
-    }
-
-    #page-header.full_page::after {
-        backdrop-filter: blur(4px) saturate(115%);
-        -webkit-backdrop-filter: blur(4px) saturate(115%);
-    }
-
     #aside-content > .card-widget.card-info {
         animation-duration: 20s;
     }
     
     [data-theme="dark"] #aside-content > .card-widget.card-info {
         animation-duration: 25s;
-    }
-}
-
-.meteor-shower {
-    position: fixed;
-    inset: 0;
-    z-index: 9997;
-    display: block;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    mix-blend-mode: screen;
-    opacity: 0.95;
-}
-
-.snow-layer {
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.snowflake {
-    position: absolute;
-    top: -12vh;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #fff 0%, rgba(255, 255, 255, 0.96) 45%, rgba(255, 255, 255, 0.18) 100%);
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-    animation-name: snow-fall, snow-sway;
-    animation-timing-function: linear, ease-in-out;
-    animation-iteration-count: infinite, infinite;
-    will-change: transform, margin-left;
-}
-
-@keyframes snow-fall {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(112vh);
-    }
-}
-
-@keyframes snow-sway {
-    from {
-        margin-left: -10px;
-    }
-
-    to {
-        margin-left: 10px;
-    }
-}
-
-.christmas-avatar-wrap {
-    position: relative;
-    display: inline-block;
-}
-
-.christmas-avatar-wrap > #avatar {
-    display: block;
-}
-
-.christmas-hat {
-    position: absolute;
-    top: -19%;
-    left: 53%;
-    z-index: 2;
-    width: 64%;
-    max-width: none;
-    transform: translateX(-50%) rotate(-13deg);
-    pointer-events: none;
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.22));
-}
-
-@media (max-width: 768px) {
-    .christmas-hat {
-        top: -16%;
-        width: 60%;
     }
 }
 /* 侧边栏公告栏卡片渐变色 */
