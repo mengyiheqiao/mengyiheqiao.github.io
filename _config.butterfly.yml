@@ -19,6 +19,7 @@ nav:
 
 menu:
      主页: / || fas fa-home
+     Now: /now/ || fas fa-satellite-dish
      归档: /archives/ || fas fa-archive
      标签: /tags/ || fas fa-tags
      关于: /about/ || fas fa-heart
@@ -169,16 +170,8 @@ subtitle:
   source: false
   # If you close the typewriter effect, the subtitle will only show the first line of sub
   sub:
-    - 离开有你的季节，为的不止是寻觅
-    - 出自《神奇的某音律诗歌》
-    - 过去都是假的，回忆没有归路，春天总是一去不返，最疯狂执着的爱情也终究是过眼云烟
-    - 出自 《百年孤独》
-    - 我们一直寻找的，却是自己原本早已拥有的；我们总是东张西望，唯独漏了自己想要的，这就是我们至今难以如愿以偿的原因。
-    - 出自《理想国》
-    - 总有一个地方叫文城。
-    - 出自 《文城》
-    - 马孔多在下雨
-    - 别犯傻了，八月下雨很正常
+    - 潮来潮往
+    - 愿你仍认得我
 # Article layout on the homepage
 # 1: Cover on the left, info on the right
 # 2: Cover on the right, info on the left
@@ -341,7 +334,7 @@ aside:
     enable: true
     # Type: monthly / yearly
     type: monthly
-    # Eg: YYYY年MM月
+    # Eg: YYYY骞碝M鏈?
     format: MMMM YYYY
     # Sort of order. 1, asc for ascending; -1, desc for descending
     order: -1
@@ -377,15 +370,15 @@ rightside_bottom:
 translate:
   enable: false
   # The text of a button
-  default: 繁
-  # the language of website (1 - Traditional Chinese/ 2 - Simplified Chinese）
+  default: '繁'
+  # the language of website (1 - Traditional Chinese/ 2 - Simplified Chinese锛?
   defaultEncoding: 2
   # Time delay
   translateDelay: 0
   # The text of the button when the language is Simplified Chinese
   msgToTraditionalChinese: '繁'
   # The text of the button when the language is Traditional Chinese
-  msgToSimplifiedChinese: '簡'
+  msgToSimplifiedChinese: '简'
 
 # Read Mode
 readmode: true
@@ -593,7 +586,7 @@ valine:
   appKey: PjBN3z0v4lHZHOeNxaTtga0t
   serverURLs: https://tw0gmzfq.lc-cn-n1-shared.com
   avatar: monsterid              
-  placeholder: (。・∀・)ノ )      
+  placeholder: (銆傘兓鈭€銉?銉?)      
   guest_info: nick,mail,link     
   pageSize: 10                  
   notify: false                  
@@ -909,9 +902,9 @@ clickShowText:
   enable: true
   text:
      - freedom
-     - 自由
+     - 鑷敱
      - I love you
-     - 将军
+     - 灏嗗啗
   fontSize: 15px
   random: false
   mobile: true
@@ -1159,4 +1152,5 @@ option:
 
 live2d:  
 	enable: true
+
 
