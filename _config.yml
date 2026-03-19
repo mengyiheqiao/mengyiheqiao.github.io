@@ -104,7 +104,7 @@ theme: butterfly
 deploy:
   type: git
   repo: git@github.com:mengyiheqiao/mengyiheqiao.github.io.git
-  branch: main
+  branch: gh-pages
 
 # APlayer 配置
 aplayer:
