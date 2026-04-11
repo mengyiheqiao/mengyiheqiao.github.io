@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://mengyiheqiao.github.io/img/22.jpg">
 <meta property="article:published_time" content="2026-03-19T09:20:00.000Z">
-<meta property="article:modified_time" content="2026-03-19T09:20:00.000Z">
+<meta property="article:modified_time" content="2026-04-11T16:00:00.000Z">
 <meta property="article:author" content="chenyu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://mengyiheqiao.github.io/img/22.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mengyiheqiao.github.io/now/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
@@ -234,7 +234,7 @@ btf.addGlobalFn('pjaxSend', () => {
 <div class="now-page">
 <div class="now-header">
 <h1 class="now-title">Now</h1>
-<p class="now-updated">最后更新：2026-03-19</p>
+<p class="now-updated">最后更新：2026-04-12</p>
 </div>
 <div class="now-intro">
 </div>
@@ -245,19 +245,358 @@ btf.addGlobalFn('pjaxSend', () => {
 </section>
 <section class="now-card">
 <h2>在玩</h2>
-<p>杀戮尖塔 2 开荒中。现在最想做的不是偶尔赢一次，而是摸清它的规律，然后稳定地一直赢。</p>
+<p>回归杀戮尖塔1，CSGO，不定时反器材复建</p>
 </section>
 <section class="now-card">
 <h2>在想</h2>
-<p>该如何才能回到一种更纯真的状态。不是变幼稚，而是重新拥有那种直接、清澈、不别扭的感受力。</p>
+<p>该如何快速掌握并运用规律呢</p>
 </section>
 <section class="now-card">
 <h2>最近更新</h2>
 <p>大规模清理了 blog 残留 bug，也新加了几个彩蛋。站点终于更像一个在被认真维护的地方。</p>
 </section>
 </div>
-<p class="now-footer"></p>
-</div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By chenyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"><script>(() => {
+<p class="now-footer">每次修改都会在下面的光阴长河里留下一张便签。</p>
+</div>
+
+
+    <style>
+      .now-river {
+        --river-line: linear-gradient(180deg, rgba(73, 177, 245, 0.16), rgba(88, 199, 180, 0.36), rgba(247, 181, 92, 0.26));
+        --river-note: linear-gradient(160deg, rgba(255, 249, 229, 0.98), rgba(255, 239, 205, 0.94));
+        --river-note-alt: linear-gradient(160deg, rgba(237, 248, 255, 0.98), rgba(220, 238, 255, 0.92));
+        margin: 68px auto 8px;
+        padding-top: 18px;
+      }
+
+      .now-river-head {
+        margin-bottom: 28px;
+        text-align: center;
+      }
+
+      .now-river-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(73, 177, 245, 0.1);
+        color: var(--font-color-secondary);
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+      }
+
+      .now-river-head h2 {
+        margin: 14px 0 10px;
+        font-size: clamp(1.9rem, 4vw, 2.8rem);
+        letter-spacing: 0.08em;
+      }
+
+      .now-river-head p {
+        max-width: 640px;
+        margin: 0 auto;
+        color: var(--font-color-secondary);
+        line-height: 1.9;
+      }
+
+      .now-river-track {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        padding-left: 34px;
+      }
+
+      .now-river-track::before {
+        content: '';
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        border-radius: 999px;
+        background: var(--river-line);
+      }
+
+      .now-river-item {
+        position: relative;
+      }
+
+      .now-river-item::before {
+        content: '';
+        position: absolute;
+        left: -29px;
+        top: 24px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: var(--theme-color);
+        box-shadow: 0 0 0 6px rgba(73, 177, 245, 0.12);
+      }
+
+      .now-river-note {
+        position: relative;
+        padding: 18px 18px 16px;
+        border-radius: 20px 20px 20px 10px;
+        border: 1px solid rgba(215, 177, 92, 0.42);
+        background: var(--river-note);
+        box-shadow: 0 18px 40px rgba(25, 41, 72, 0.08);
+      }
+
+      .now-river-item:nth-child(even) .now-river-note {
+        background: var(--river-note-alt);
+        border-color: rgba(73, 177, 245, 0.24);
+      }
+
+      .now-river-note::after {
+        content: '';
+        position: absolute;
+        top: -9px;
+        right: 18px;
+        width: 54px;
+        height: 18px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.52);
+        transform: rotate(-6deg);
+      }
+
+      .now-river-item:nth-child(3n) .now-river-note {
+        transform: rotate(-0.7deg);
+      }
+
+      .now-river-item:nth-child(3n + 1) .now-river-note {
+        transform: rotate(0.55deg);
+      }
+
+      .now-river-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .now-river-date {
+        margin: 0;
+        font-size: 0.88rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: #6e5327;
+      }
+
+      .now-river-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(109, 83, 39, 0.1);
+        color: #785f32;
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+      }
+
+      .now-river-label {
+        margin: 0 0 8px;
+        color: var(--font-color-secondary);
+        font-size: 0.82rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .now-river-summary {
+        margin: 0;
+        color: var(--font-color);
+        line-height: 1.95;
+      }
+
+      .now-river-fragments {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .now-river-fragment {
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px dashed rgba(109, 83, 39, 0.18);
+        background: rgba(255, 255, 255, 0.46);
+      }
+
+      .now-river-fragment h3 {
+        margin: 0 0 6px;
+        font-size: 0.9rem;
+        letter-spacing: 0.03em;
+      }
+
+      .now-river-fragment p {
+        margin: 0;
+        color: var(--font-color-secondary);
+        line-height: 1.8;
+      }
+
+      .now-river-empty {
+        padding: 18px 20px;
+        border-radius: 16px;
+        border: 1px dashed rgba(73, 177, 245, 0.3);
+        background: rgba(73, 177, 245, 0.06);
+        color: var(--font-color-secondary);
+        line-height: 1.9;
+      }
+
+      .now-river-empty p {
+        margin: 0;
+      }
+
+      @media (min-width: 920px) {
+        .now-river-track {
+          padding-left: 0;
+        }
+
+        .now-river-track::before {
+          left: 50%;
+          margin-left: -1.5px;
+        }
+
+        .now-river-item {
+          width: calc(50% - 30px);
+        }
+
+        .now-river-item:nth-child(odd) {
+          margin-right: auto;
+        }
+
+        .now-river-item:nth-child(even) {
+          margin-left: auto;
+        }
+
+        .now-river-item::before {
+          left: auto;
+          right: -37px;
+        }
+
+        .now-river-item:nth-child(even)::before {
+          left: -37px;
+          right: auto;
+        }
+      }
+
+      [data-theme="dark"] .now-river {
+        --river-note: linear-gradient(160deg, rgba(72, 61, 37, 0.94), rgba(56, 47, 29, 0.94));
+        --river-note-alt: linear-gradient(160deg, rgba(32, 46, 66, 0.96), rgba(25, 36, 52, 0.92));
+      }
+
+      [data-theme="dark"] .now-river-eyebrow {
+        background: rgba(73, 177, 245, 0.16);
+      }
+
+      [data-theme="dark"] .now-river-note {
+        border-color: rgba(255, 219, 131, 0.12);
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+      }
+
+      [data-theme="dark"] .now-river-note::after {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      [data-theme="dark"] .now-river-date,
+      [data-theme="dark"] .now-river-badge {
+        color: rgba(255, 236, 194, 0.92);
+      }
+
+      [data-theme="dark"] .now-river-badge {
+        background: rgba(255, 236, 194, 0.08);
+      }
+
+      [data-theme="dark"] .now-river-fragment {
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+    </style>
+    <section class="now-river">
+      <div class="now-river-head">
+        <span class="now-river-eyebrow">LONG NOW</span>
+        <h2>光阴长河</h2>
+        <p>这里会把每次写下的 now 留成一张便签，沿着同一条时间线往后延伸。以后你每次改完并提交，这条河就会自己长出新的节点。</p>
+      </div>
+      <div class="now-river-track">
+        
+    <article class="now-river-item now-river-item--current">
+      <div class="now-river-note">
+        <div class="now-river-meta">
+          <p class="now-river-date">2026-04-11</p>
+          <span class="now-river-badge">当前</span>
+        </div>
+        <p class="now-river-label">此刻</p>
+        <p class="now-river-summary">最近的关键词是开荒、规律、修站，还有一点想把自己重新找回来的念头。</p>
+        
+    <div class="now-river-fragments">
+      
+            <section class="now-river-fragment">
+              <h3>最近状态</h3>
+              <p>最近的关键词是开荒、规律、修站，还有一点想把自己重新找回来的念头。</p>
+            </section>
+          
+            <section class="now-river-fragment">
+              <h3>在玩</h3>
+              <p>回归杀戮尖塔1，CSGO，不定时反器材复建</p>
+            </section>
+          
+            <section class="now-river-fragment">
+              <h3>在想</h3>
+              <p>该如何快速掌握并运用规律呢</p>
+            </section>
+          
+            <section class="now-river-fragment">
+              <h3>最近更新</h3>
+              <p>大规模清理了 blog 残留 bug，也新加了几个彩蛋。站点终于更像一个在被认真维护的地方。</p>
+            </section>
+          
+    </div>
+  
+      </div>
+    </article>
+  
+    <article class="now-river-item now-river-item--git">
+      <div class="now-river-note">
+        <div class="now-river-meta">
+          <p class="now-river-date">2026-03-19</p>
+          <span class="now-river-badge">归档</span>
+        </div>
+        
+        <p class="now-river-summary">这里不写完整的人生简历，只记录我此刻真正靠近的东西。比起“我是谁”，我更想留住“我最近正在成为什么样的人”。</p>
+        
+    <div class="now-river-fragments">
+      
+            <section class="now-river-fragment">
+              <h3>最近状态</h3>
+              <p>最近的关键词是开荒、规律、修站，还有一点想把自己重新找回来的念头。</p>
+            </section>
+          
+            <section class="now-river-fragment">
+              <h3>在玩</h3>
+              <p>杀戮尖塔 2 开荒中。现在最想做的不是偶尔赢一次，而是摸清它的规律，然后稳定地一直赢。</p>
+            </section>
+          
+            <section class="now-river-fragment">
+              <h3>在想</h3>
+              <p>该如何才能回到一种更纯真的状态。不是变幼稚，而是重新拥有那种直接、清澈、不别扭的感受力。</p>
+            </section>
+          
+            <section class="now-river-fragment">
+              <h3>最近更新</h3>
+              <p>大规模清理了 blog 残留 bug，也新加了几个彩蛋。站点终于更像一个在被认真维护的地方。</p>
+            </section>
+          
+    </div>
+  
+      </div>
+    </article>
+  
+      </div>
+    </section>
+  
+
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By chenyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"><script>(() => {
   const runMermaid = ele => {
     window.loadMermaid = true
     const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
