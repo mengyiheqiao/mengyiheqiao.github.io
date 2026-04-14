@@ -1,0 +1,441 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>解决限制复制粘贴通解 | jiayu</title><meta name="author" content="chenyu"><meta name="copyright" content="chenyu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这篇文章用一个最小可用的示例，讲清楚 Python 自动化输入脚本的环境准备、依赖安装、完整代码、运行步骤和常见注意事项。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决限制复制粘贴通解">
+<meta property="og:url" content="https://mengyiheqiao.github.io/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/index.html">
+<meta property="og:site_name" content="jiayu">
+<meta property="og:description" content="这篇文章用一个最小可用的示例，讲清楚 Python 自动化输入脚本的环境准备、依赖安装、完整代码、运行步骤和常见注意事项。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mengyiheqiao.github.io/img/22.jpg">
+<meta property="article:published_time" content="2026-04-14T06:42:39.000Z">
+<meta property="article:modified_time" content="2026-04-14T10:07:06.573Z">
+<meta property="article:author" content="chenyu">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="教程">
+<meta property="article:tag" content="自动化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mengyiheqiao.github.io/img/22.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "解决限制复制粘贴通解",
+  "url": "https://mengyiheqiao.github.io/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/",
+  "image": "https://mengyiheqiao.github.io/img/22.jpg",
+  "datePublished": "2026-04-14T06:42:39.000Z",
+  "dateModified": "2026-04-14T10:07:06.573Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "chenyu",
+      "url": "https://mengyiheqiao.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mengyiheqiao.github.io/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '解决限制复制粘贴通解',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/myStyle.css"><script src="/live2d-widget/dist/autoload.js"></script><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="/css/center-atom.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg" style="background-image: url(/img/15.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/start/"><i class="fa-fw fas fa-compass"></i><span> 开始读</span></a></div><div class="menus_item"><a class="site-page" href="/now/"><i class="fa-fw fas fa-satellite-dish"></i><span> Now</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/15.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">jiayu</span></a><a class="nav-page-title" href="/"><span class="site-name">解决限制复制粘贴通解</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/start/"><i class="fa-fw fas fa-compass"></i><span> 开始读</span></a></div><div class="menus_item"><a class="site-page" href="/now/"><i class="fa-fw fas fa-satellite-dish"></i><span> Now</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">解决限制复制粘贴通解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-14T06:42:39.000Z" title="发表于 2026-04-14 14:42:39">2026-04-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-14T10:07:06.573Z" title="更新于 2026-04-14 18:07:06">2026-04-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%96%B9%E6%B3%95/">方法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>有些场景需要重复输入同一段文本、命令或代码片段。与其一遍遍手动敲，不如先写一个最小可用的自动化输入脚本，把流程跑通，再根据自己的需要慢慢扩展。</p>
+<p>这篇文章不讲复杂框架，只讲一个适合初学者上手的基础示例：从剪贴板读取内容，然后模拟键盘逐字输入，同时支持按空格键立即停止。</p>
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-lightbulb"></i><p>建议先在记事本、本地草稿或测试输入框中验证脚本行为，确认无误后再用于正式场景。 </p>
+</div>
+
+<h2 id="运行前准备"><a href="#运行前准备" class="headerlink" title="运行前准备"></a>运行前准备</h2><h3 id="1-安装-Python"><a href="#1-安装-Python" class="headerlink" title="1. 安装 Python"></a>1. 安装 Python</h3><p>先去 Python 官网安装 Python。版本建议优先选 <code>3.12</code> 或较新的稳定版本，不必一开始就追最新版本，这样第三方库的兼容性通常更稳。</p>
+<p>安装完成后，可以先在终端里确认 Python 是否已经正常可用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-安装依赖"><a href="#2-安装依赖" class="headerlink" title="2. 安装依赖"></a>2. 安装依赖</h3><p>这个示例一共会用到 3 个库：</p>
+<ul>
+<li><code>pyautogui</code>：负责模拟键盘输入。</li>
+<li><code>keyboard</code>：负责监听键盘，用来实现“按空格立即停止”。</li>
+<li><code>pyperclip</code>：负责读取剪贴板内容。</li>
+</ul>
+<p>安装命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install pyautogui</span><br><span class="line">pip install keyboard</span><br><span class="line">pip install pyperclip</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-新建脚本文件"><a href="#3-新建脚本文件" class="headerlink" title="3. 新建脚本文件"></a>3. 新建脚本文件</h3><p>可以在 VS Code 里新建一个 Python 文件，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_typer.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>下面是一份可以直接运行的最小示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> keyboard</span><br><span class="line"><span class="keyword">import</span> pyautogui</span><br><span class="line"><span class="keyword">import</span> pyperclip</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">auto_typer</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;【自动输入脚本已启动】&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;操作指南：&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;1. 先把要输入的内容复制到剪贴板。&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;2. 程序启动后，会预留 5 秒切换到目标输入框。&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;3. 输入过程中按下空格键，可以立即停止程序。&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;-&quot;</span> * <span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">    time.sleep(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    text = pyperclip.paste()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> text:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;错误：剪贴板为空。&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;开始输入...（按下空格退出）&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> text:</span><br><span class="line">        <span class="keyword">if</span> keyboard.is_pressed(<span class="string">&quot;space&quot;</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;\n检测到空格键，程序已停止。&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        pyautogui.write(char)</span><br><span class="line">        <span class="comment"># 如果你觉得输入过快，可以取消下一行的注释</span></span><br><span class="line">        <span class="comment"># time.sleep(0.001)</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n输入完成。&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        auto_typer()</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n程序已通过 Ctrl+C 关闭。&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码结构拆解"><a href="#代码结构拆解" class="headerlink" title="代码结构拆解"></a>代码结构拆解</h2><p>如果你是第一次接触这类脚本，建议不要一上来就死记整段代码，而是先把结构看清楚。</p>
+<h3 id="1-导入依赖"><a href="#1-导入依赖" class="headerlink" title="1. 导入依赖"></a>1. 导入依赖</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> keyboard</span><br><span class="line"><span class="keyword">import</span> pyautogui</span><br><span class="line"><span class="keyword">import</span> pyperclip</span><br></pre></td></tr></table></figure>
+
+<p>这 4 个导入里：</p>
+<ul>
+<li><code>time</code> 用来做延迟，给你预留切换窗口的时间。</li>
+<li><code>keyboard</code> 用来监听停止按键。</li>
+<li><code>pyautogui</code> 用来模拟真实键盘输入。</li>
+<li><code>pyperclip</code> 用来直接读取剪贴板里的文本。</li>
+</ul>
+<h3 id="2-主函数负责整个流程"><a href="#2-主函数负责整个流程" class="headerlink" title="2. 主函数负责整个流程"></a>2. 主函数负责整个流程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">auto_typer</span>():</span><br></pre></td></tr></table></figure>
+
+<p>这个函数把整个脚本串了起来，执行顺序很清晰：</p>
+<ol>
+<li>先打印提示信息。</li>
+<li>再等待几秒，让你切换到目标输入框。</li>
+<li>然后读取剪贴板内容。</li>
+<li>最后逐字模拟输入。</li>
+</ol>
+<h3 id="3-预留切换窗口的时间"><a href="#3-预留切换窗口的时间" class="headerlink" title="3. 预留切换窗口的时间"></a>3. 预留切换窗口的时间</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.sleep(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这一步虽然简单，但非常实用。因为脚本一旦开始运行，输入就会直接发往当前获得焦点的窗口，所以通常都需要留一个缓冲时间，让你把光标移动到正确的位置。</p>
+<h3 id="4-从剪贴板读取内容"><a href="#4-从剪贴板读取内容" class="headerlink" title="4. 从剪贴板读取内容"></a>4. 从剪贴板读取内容</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">text = pyperclip.paste()</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> text:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;错误：剪贴板为空。&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<p>这段逻辑主要解决两个问题：</p>
+<ul>
+<li>读取你刚刚复制的文本内容。</li>
+<li>如果剪贴板为空，就直接退出，避免脚本空跑。</li>
+</ul>
+<h3 id="5-逐字输入，并在每次输入前检查停止键"><a href="#5-逐字输入，并在每次输入前检查停止键" class="headerlink" title="5. 逐字输入，并在每次输入前检查停止键"></a>5. 逐字输入，并在每次输入前检查停止键</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> char <span class="keyword">in</span> text:</span><br><span class="line">    <span class="keyword">if</span> keyboard.is_pressed(<span class="string">&quot;space&quot;</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n检测到空格键，程序已停止。&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    pyautogui.write(char)</span><br></pre></td></tr></table></figure>
+
+<p>这是整份脚本最核心的部分。</p>
+<p>它的思路并不复杂：把整段文本拆成一个个字符，在每次真正发送按键之前，先检查一次空格键是否被按下。如果检测到停止指令，就立刻退出函数，不再继续输入。</p>
+<h3 id="6-用-try-except-处理手动中断"><a href="#6-用-try-except-处理手动中断" class="headerlink" title="6. 用 try / except 处理手动中断"></a>6. 用 <code>try / except</code> 处理手动中断</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        auto_typer()</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n程序已通过 Ctrl+C 关闭。&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这一层不是必须的，但很实用。它能保证你在终端里按下 <code>Ctrl + C</code> 时，程序会更平稳地结束，而不是直接抛一串报错信息。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>写完脚本后，实际运行流程可以按下面这 5 步走：</p>
+<ol>
+<li>先复制好你准备输入的文本。</li>
+<li>在终端或 VS Code 中运行这个 Python 文件。</li>
+<li>程序启动后，利用预留的 5 秒把光标切换到目标输入框。</li>
+<li>等待脚本自动完成输入。</li>
+<li>如果发现位置不对，或者不想继续执行，按空格键立即停止。</li>
+</ol>
+<h2 id="常见注意事项"><a href="#常见注意事项" class="headerlink" title="常见注意事项"></a>常见注意事项</h2><h3 id="1-更适合英文、符号和代码片段"><a href="#1-更适合英文、符号和代码片段" class="headerlink" title="1. 更适合英文、符号和代码片段"></a>1. 更适合英文、符号和代码片段</h3><p><code>pyautogui.write()</code> 在处理英文、数字、符号和代码片段时通常更直接。如果你的输入法处于中文状态，实际结果可能会受到输入法候选框和快捷键的影响。</p>
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-keyboard"></i><p>如果你的目标内容主要是代码、命令或符号，运行前先切到英文输入法，稳定性通常会更好。 </p>
+</div>
+
+<h3 id="2-如果输入速度太快，可以手动降速"><a href="#2-如果输入速度太快，可以手动降速" class="headerlink" title="2. 如果输入速度太快，可以手动降速"></a>2. 如果输入速度太快，可以手动降速</h3><p>如果你发现目标程序响应不过来，可以把下面这一行取消注释：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.sleep(<span class="number">0.001</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样每输入一个字符后，都会稍微停顿一下。虽然会变慢一点，但在某些输入框里会更稳定。</p>
+<h3 id="3-如果输出结果异常，先检查焦点和热键冲突"><a href="#3-如果输出结果异常，先检查焦点和热键冲突" class="headerlink" title="3. 如果输出结果异常，先检查焦点和热键冲突"></a>3. 如果输出结果异常，先检查焦点和热键冲突</h3><p>这类脚本高度依赖当前窗口焦点。如果光标不在正确位置，或者目标软件本身有快捷键拦截、权限限制、输入框过滤等情况，最终输入结果就可能和预期不同。</p>
+<p>比较稳妥的做法是：</p>
+<ul>
+<li>先在空白记事本里验证脚本行为。</li>
+<li>确认剪贴板内容无误。</li>
+<li>确认光标已经放到正确输入框。</li>
+<li>确认没有其他全局热键和它冲突。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章介绍的是一个最小可用的 Python 自动化输入脚本：它能读取剪贴板内容、模拟逐字输入，并在必要时通过空格键或 <code>Ctrl + C</code> 手动停止。</p>
+<p>如果后面你还想继续扩展，可以再往这个脚本里补这几类能力：</p>
+<ul>
+<li>自定义延迟时间</li>
+<li>指定开始热键</li>
+<li>日志输出</li>
+<li>只在特定程序窗口中执行</li>
+</ul>
+<p>先把最小版本写明白，再一点点加功能，通常比一开始就写复杂版本更稳。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://mengyiheqiao.github.io">chenyu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://mengyiheqiao.github.io/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/">https://mengyiheqiao.github.io/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://mengyiheqiao.github.io" target="_blank">jiayu</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a></div><div class="post-share"><div class="social-share" data-image="/img/22.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/09/jung-anima/" title="从夏娃到索菲亚：深度研究阿尼玛"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">从夏娃到索菲亚：深度研究阿尼玛</div></div><div class="info-2"><div class="info-item-1"> 如果你以前从来没接触过荣格，那这篇文章你可以先记住一句最简单的话： 阿尼玛，就是男人内心那套关于女性、关系、爱、依赖、幻想和意义的无意识形象。 它不是现实里的某个女人，但男人常常会把它投到现实女人身上。于是，一个人表面上像是在爱一个具体的人，实际上也可能是在追逐自己内在某种还没被看清的东西。 这也是为什么有些关系会这么“失控”：明明认识没多久，却觉得对方像命中注定；明明对方只是一个普通人，却觉得她像救赎、像光、像归宿；明明关系结束了，却像整个人被挖空了一样。这些体验不一定都是假的，但其中常常夹杂着阿尼玛的投射。 如果你能先理解上面这几句话，后面的内容就不会太难。 一、先用一个最白话的例子理解阿尼玛假设一个男人遇到一个女生。她长得好看，气质安静，也愿意听他说话。很快，他开始觉得这个人“特别不一样”。他会想：她懂我，她和别人不一样，她身上有一种我一直在找的东西。 问题在于，这个判断未必完全来自她本人。很多时候，他真正被击中的，不只是眼前这个女生，而是这个女生触发了他内心早就存在的一种女性想象。于是他把很多本来属于自己无意识的东西，放到了她身上。 这就叫投射。 所以你可以先把阿尼玛理...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/03/18/Hexo%E5%8D%9A%E5%AE%A2%E7%89%B9%E5%AE%9A%E6%97%B6%E9%97%B4%E6%B5%81%E6%98%9F%E9%9B%A8%E5%92%8C%E5%9C%A3%E8%AF%9E%E4%B8%8B%E9%9B%AA%E6%95%99%E7%A8%8B/" title="Hexo博客特定时间流星雨和圣诞下雪教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-18</div><div class="info-item-2">Hexo博客特定时间流星雨和圣诞下雪教程</div></div><div class="info-2"><div class="info-item-1">最近我给自己的 Hexo 博客加了两组节日特效：  每年 12 月 24 日和 12 月 25 日显示圣诞下雪效果 每天 23:59 到次日 00:05 显示流星雨效果  这篇文章不是泛泛讲思路，而是直接按我项目里现在的真实落地方式来拆解。你照着做，基本就能复刻出来。 先说最终改了哪些文件这次真正参与实现的源文件一共 4 个：  source/js/christmas-effects.js作用：核心逻辑都在这里，包含时间判断、下雪、圣诞帽、流星雨、PJAX 兼容。  source/css/myStyle.css作用：给雪花层、流星雨 canvas、圣诞帽补样式和动画。  _config.butterfly.yml作用：把自定义 CSS 和 JS 注入到 Butterfly 主题页面里。  source/img/christmas-hat.png作用：侧边栏头像上面那顶圣诞帽图片。   如果你执行 hexo g，还会自动生成这些发布文件：  public/js/christmas-effects.js public/img/christmas-hat.png  注意：public/...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">chenyu</div><div class="author-info-description">记录生活、思考、方法和阶段近况。</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mengyiheqiao"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/mengyiheqiao" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里记录生活、思考、方法，以及此刻在做什么。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">运行前准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85-Python"><span class="toc-number">1.1.</span> <span class="toc-text">1. 安装 Python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">1.2.</span> <span class="toc-text">2. 安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%B0%E5%BB%BA%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">3. 新建脚本文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">完整代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E6%8B%86%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">代码结构拆解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AF%BC%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="toc-number">3.1.</span> <span class="toc-text">1. 导入依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%BB%E5%87%BD%E6%95%B0%E8%B4%9F%E8%B4%A3%E6%95%B4%E4%B8%AA%E6%B5%81%E7%A8%8B"><span class="toc-number">3.2.</span> <span class="toc-text">2. 主函数负责整个流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%A2%84%E7%95%99%E5%88%87%E6%8D%A2%E7%AA%97%E5%8F%A3%E7%9A%84%E6%97%B6%E9%97%B4"><span class="toc-number">3.3.</span> <span class="toc-text">3. 预留切换窗口的时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BB%8E%E5%89%AA%E8%B4%B4%E6%9D%BF%E8%AF%BB%E5%8F%96%E5%86%85%E5%AE%B9"><span class="toc-number">3.4.</span> <span class="toc-text">4. 从剪贴板读取内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%80%90%E5%AD%97%E8%BE%93%E5%85%A5%EF%BC%8C%E5%B9%B6%E5%9C%A8%E6%AF%8F%E6%AC%A1%E8%BE%93%E5%85%A5%E5%89%8D%E6%A3%80%E6%9F%A5%E5%81%9C%E6%AD%A2%E9%94%AE"><span class="toc-number">3.5.</span> <span class="toc-text">5. 逐字输入，并在每次输入前检查停止键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E7%94%A8-try-except-%E5%A4%84%E7%90%86%E6%89%8B%E5%8A%A8%E4%B8%AD%E6%96%AD"><span class="toc-number">3.6.</span> <span class="toc-text">6. 用 try &#x2F; except 处理手动中断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">5.</span> <span class="toc-text">常见注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9B%B4%E9%80%82%E5%90%88%E8%8B%B1%E6%96%87%E3%80%81%E7%AC%A6%E5%8F%B7%E5%92%8C%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5"><span class="toc-number">5.1.</span> <span class="toc-text">1. 更适合英文、符号和代码片段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A6%82%E6%9E%9C%E8%BE%93%E5%85%A5%E9%80%9F%E5%BA%A6%E5%A4%AA%E5%BF%AB%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%89%8B%E5%8A%A8%E9%99%8D%E9%80%9F"><span class="toc-number">5.2.</span> <span class="toc-text">2. 如果输入速度太快，可以手动降速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%A6%82%E6%9E%9C%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%E5%BC%82%E5%B8%B8%EF%BC%8C%E5%85%88%E6%A3%80%E6%9F%A5%E7%84%A6%E7%82%B9%E5%92%8C%E7%83%AD%E9%94%AE%E5%86%B2%E7%AA%81"><span class="toc-number">5.3.</span> <span class="toc-text">3. 如果输出结果异常，先检查焦点和热键冲突</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/" title="解决限制复制粘贴通解">解决限制复制粘贴通解</a><time datetime="2026-04-14T06:42:39.000Z" title="发表于 2026-04-14 14:42:39">2026-04-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/09/jung-anima/" title="从夏娃到索菲亚：深度研究阿尼玛">从夏娃到索菲亚：深度研究阿尼玛</a><time datetime="2026-04-09T11:06:24.000Z" title="发表于 2026-04-09 19:06:24">2026-04-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/09/4%E6%9C%889%E6%97%A5/" title="4月9日">4月9日</a><time datetime="2026-04-09T05:44:29.000Z" title="发表于 2026-04-09 13:44:29">2026-04-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/01/%E7%BA%AF%E7%B2%B9%E6%80%A7/" title="纯粹性">纯粹性</a><time datetime="2026-04-01T09:38:19.000Z" title="发表于 2026-04-01 17:38:19">2026-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/18/Hexo%E5%8D%9A%E5%AE%A2%E7%89%B9%E5%AE%9A%E6%97%B6%E9%97%B4%E6%B5%81%E6%98%9F%E9%9B%A8%E5%92%8C%E5%9C%A3%E8%AF%9E%E4%B8%8B%E9%9B%AA%E6%95%99%E7%A8%8B/" title="Hexo博客特定时间流星雨和圣诞下雪教程">Hexo博客特定时间流星雨和圣诞下雪教程</a><time datetime="2026-03-18T10:10:00.000Z" title="发表于 2026-03-18 18:10:00">2026-03-18</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By chenyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'TW0GmZfqrSURslq3EjQXlURa-gzGzoHsz',
+      appKey: 'PjBN3z0v4lHZHOeNxaTtga0t',
+      avatar: 'monsterid',
+      serverURLs: 'https://tw0gmzfq.lc-cn-n1-shared.com',
+      emojiMaps: "",
+      visitor: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Valine' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/meting/2.0.1/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js"></script><div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="false"> </div><script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script><script>LA.init({id:"3OgqW1Lfs34OU9ox",ck:"3OgqW1Lfs34OU9ox"})</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/metingjs/dist/Meting.min.js"></script><script>(() => {
+  const destroyAplayer = () => {
+    if (window.aplayers) {
+      for (let i = 0; i < window.aplayers.length; i++) {
+        if (!window.aplayers[i].options.fixed) {
+          window.aplayers[i].destroy()
+        }
+      }
+    }
+  }
+
+  const runMetingJS = () => {
+    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+  }
+
+  btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
+  btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
+})()</script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="/"></script></div></body></html>
