@@ -1,9 +1,12 @@
 ---
 title: csgo 可视化 demo 记录
 date: 2026-01-12 15:32:08
+categories:
+  - 方法
 tags:
   - 方法
   - 游戏
+description: "用来防止自己忘记使用方法 用vscode打开桌面文件夹 下载视频demo \\\\\\\".dem\\\\\\\"文件放进文件夹右键复制地址 粘贴至main.py 中src.config.DEMO PATH = r\\\\\\\"C…"
 ---
 用来防止自己忘记使用方法
 1：用vscode打开桌面文件夹

@@ -19,13 +19,11 @@ nav:
 
 menu:
      主页: / || fas fa-home
+     开始读: /start/ || fas fa-compass
      Now: /now/ || fas fa-satellite-dish
      归档: /archives/ || fas fa-archive
      标签: /tags/ || fas fa-tags
      关于: /about/ || fas fa-heart
-     List||fas fa-list:
-       Music: /music/ || fas fa-music
-       Movie: /movies/ || fas fa-video
 
 # --------------------------------------
 # Code Blocks Settings
@@ -50,7 +48,7 @@ code_blocks:
 # Formal:
 #   icon: link || the description || color
 social:
-  # fab fa-github: https://github.com/xxxxx || Github || '#24292e'
+  fab fa-github: https://github.com/mengyiheqiao || GitHub || '#24292e'
   # fas fa-envelope: mailto:xxxxxx@gmail.com || Email || '#4a7dbe'
 
 # --------------------------------------
@@ -290,15 +288,15 @@ aside:
     category: true
   card_author:
     enable: true
-    description:
+    description: 记录生活、思考、方法和阶段近况。
     button:
       enable: true
       icon: fab fa-github
-      text: Follow Me
-      link: https://github.com/xxxxxx
+      text: GitHub
+      link: https://github.com/mengyiheqiao
   card_announcement:
     enable: true
-    content: This is my Blog
+    content: 这里记录生活、思考、方法，以及此刻在做什么。
   card_recent_post:
     enable: true
     # If set 0 will show all
@@ -847,7 +845,7 @@ hr_icon:
 # Typewriter Effect
 # https://github.com/disjukr/activate-power-mode
 activate_power_mode:
-  enable: true
+  enable: false
   colorful: true
   shake: true
   mobile: false
@@ -899,12 +897,12 @@ click_heart:
 
 # Mouse click effects: words
 clickShowText:
-  enable: true
+  enable: false
   text:
      - freedom
-     - 鑷敱
+     - 将军
      - I love you
-     - 灏嗗啗
+     - (●'◡'●)
   fontSize: 15px
   random: false
   mobile: true
@@ -1068,7 +1066,7 @@ inject:
     - <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
     - <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/meting/2.0.1/Meting.min.js"></script>
     - <script src="https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js"></script>
-    - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="true"> </div>'  
+    - '<div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="false"> </div>'  
     - <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
     - <script>LA.init({id:"3OgqW1Lfs34OU9ox",ck:"3OgqW1Lfs34OU9ox"})</script>
 # CDN Settings
@@ -1150,7 +1148,7 @@ option:
 
 
 
-live2d:  
-	enable: true
+live2d:
+  enable: false
 
 

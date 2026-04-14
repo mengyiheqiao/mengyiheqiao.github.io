@@ -1,9 +1,12 @@
 ---
 title: index 事件
 date: 2025-11-13 11:01:50
+categories:
+  - 方法
 tags:
   - 博客
   - 崩溃
+description: "由于WARN No layout: index.html引起的blog崩溃现已经修复成功 25/11/13 后记：天意发力了！物理课点名点到我了八嘎 很庆幸在原有文件夹里我保留了一个blog…"
 ---
 由于WARN No layout: index.html引起的blog崩溃现已经修复成功
 

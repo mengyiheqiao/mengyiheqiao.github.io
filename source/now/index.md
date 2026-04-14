@@ -1,12 +1,19 @@
 ---
 title: Now
 date: 2026-03-19 17:20:00
-updated: 2026-03-19 17:20:00
+updated: 2026-04-12 00:00:00
 comments: true
 aside: false
 top_img: false
 ---
 
+<!--
+Now 填写提示
+1. 状态明显变化时再改，不用每天更新。
+2. 每个卡片写 1-2 句，像便签，不像日记。
+3. 更新时记得同时改上面的 updated 和下面的“最后更新”日期。
+4. 想让这次状态永久进入光阴长河，改完后记得提交 Git。
+-->
 <style>
   .now-page {
     max-width: 860px;
@@ -90,28 +97,32 @@ top_img: false
 <div class="now-page">
 <div class="now-header">
 <h1 class="now-title">Now</h1>
-<p class="now-updated">最后更新：2026-03-19</p>
+<p class="now-updated">最后更新：2026-04-12</p>
 </div>
 <div class="now-intro">
-这里不写完整的人生简历，只记录我此刻真正靠近的东西。比起“我是谁”，我更想留住“我最近正在成为什么样的人”。
+这一页只记录此刻，不追求完整，只给未来的自己留一张短笺。
 </div>
 <div class="now-grid">
 <section class="now-card">
 <h2>最近状态</h2>
-<p>最近的关键词是开荒、规律、修站，还有一点想把自己重新找回来的念头。</p>
+<p>睡觉，修站，</p>
 </section>
 <section class="now-card">
 <h2>在玩</h2>
-<p>杀戮尖塔 2 开荒中。现在最想做的不是偶尔赢一次，而是摸清它的规律，然后稳定地一直赢。</p>
+<p>素晴日，codex</p>
 </section>
 <section class="now-card">
 <h2>在想</h2>
-<p>该如何才能回到一种更纯真的状态。不是变幼稚，而是重新拥有那种直接、清澈、不别扭的感受力。</p>
+<p>该如何快速掌握并运用规律呢</p>
 </section>
 <section class="now-card">
 <h2>最近更新</h2>
-<p>大规模清理了 blog 残留 bug，也新加了几个彩蛋。站点终于更像一个在被认真维护的地方。</p>
+<p>加入了光阴长河</p>
 </section>
 </div>
-<p class="now-footer">以后这页会直接在 Obsidian 里继续改。</p>
+<p class="now-footer">每次修改都会在下面的光阴长河里留下一张便签。</p>
 </div>
+
+{% now_river %}
+
+

@@ -5,11 +5,11 @@
 # Site
 title: jiayu
 subtitle: '面朝大海 栖息之地'
-description: ''
-keywords:
+description: '记录生活、思考、方法与阶段近况。'
+keywords: 个人博客,生活记录,思考笔记,方法沉淀,Now
 author: chenyu
 language: zh-CN
-timezone: ''
+timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -67,7 +67,7 @@ index_generator:
   order_by: -date
 
 # Category & Tag
-default_category: uncategorized
+default_category: 生活
 category_map:
 tag_map:
 
@@ -94,6 +94,8 @@ pagination_dir: page
 include:
 exclude:
 ignore:
+  - '_obsidian/**'
+  - '**/.obsidian/**'
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/

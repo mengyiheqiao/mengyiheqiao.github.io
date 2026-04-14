@@ -1,5 +1,9 @@
 ---
 title: {{ title }}
 date: {{ date }}
-tags:
+categories:
+  - 生活
+tags: []
+description:
+cover:
 ---

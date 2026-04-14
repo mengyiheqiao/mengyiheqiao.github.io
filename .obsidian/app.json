@@ -1,9 +1,0 @@
-{
-  "userIgnoreFilters": [
-    "themes/",
-    "scaffolds/",
-    "public/",
-    "myblog/",
-    "node_modules/"
-  ]
-}

@@ -1,8 +1,11 @@
 ---
 title: Gemini 刻意练习
 date: 2026-01-10 19:49:16
+categories:
+  - 方法
 tags:
   - AI
+description: "📚 必读参考资料 事情起因 这篇文章写的很好建议有空都来看看，虽然他是计算机领域但是跟任何地方殊途同归，道是一样的 我依稀记得几年前我好像记录过关于学业上的如何提问，到时候我会找到并贴在下…"
 ---
 ### 📚 必读参考资料 {% link 提问的智慧 (GitHub 中文版), https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way %} {% link How To Ask Questions The Smart Way (英文原版), http://www.catb.org/~esr/faqs/smart-questions.html ] %}
 ## 事情起因
