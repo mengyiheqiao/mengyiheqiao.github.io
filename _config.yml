@@ -96,6 +96,8 @@ exclude:
 ignore:
   - '_obsidian/**'
   - '**/.obsidian/**'
+  - '**/shuoshuo/!(index).md'
+  - '**/shuoshuo/*.base'
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/

@@ -1,4 +1,4 @@
-﻿---
+---
 title: Now
 date: {{date}}
 updated: {{date}}
