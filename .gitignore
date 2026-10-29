@@ -44,3 +44,6 @@ codex*.exe
 /.github/tags/
 /.github/CNAME
 /.github/index.html
+
+# 写文章用的原始素材（照片原图、草稿），不上传
+/_素材/

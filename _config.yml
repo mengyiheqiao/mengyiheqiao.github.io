@@ -110,6 +110,11 @@ deploy:
   repo: git@github.com:mengyiheqiao/mengyiheqiao.github.io.git
   branch: gh-pages
 
+# 文章里的相对图片路径指向该文章的资源文件夹（post_asset_folder）
+marked:
+  prependRoot: true
+  postAsset: true
+
 # 本地搜索索引（hexo-generator-searchdb）
 search:
   path: search.xml
