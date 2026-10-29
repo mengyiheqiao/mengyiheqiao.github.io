@@ -1062,6 +1062,7 @@ css_prefix: true
 inject:
   head: 
     - <link rel="stylesheet" href="/css/myStyle.css">
+    - <script src="/live2d-widget/dist/autoload.js"></script>
     
   bottom:
     - <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
