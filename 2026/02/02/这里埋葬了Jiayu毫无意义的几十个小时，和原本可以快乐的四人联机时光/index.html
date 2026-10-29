@@ -28,51 +28,92 @@
       "url": "https://jiayulee.com"
     }
   ]
-}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jiayulee.com/2026/02/02/%E8%BF%99%E9%87%8C%E5%9F%8B%E8%91%AC%E4%BA%86Jiayu%E6%AF%AB%E6%97%A0%E6%84%8F%E4%B9%89%E7%9A%84%E5%87%A0%E5%8D%81%E4%B8%AA%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%92%8C%E5%8E%9F%E6%9C%AC%E5%8F%AF%E4%BB%A5%E5%BF%AB%E4%B9%90%E7%9A%84%E5%9B%9B%E4%BA%BA%E8%81%94%E6%9C%BA%E6%97%B6%E5%85%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jiayulee.com/2026/02/02/%E8%BF%99%E9%87%8C%E5%9F%8B%E8%91%AC%E4%BA%86Jiayu%E6%AF%AB%E6%97%A0%E6%84%8F%E4%B9%89%E7%9A%84%E5%87%A0%E5%8D%81%E4%B8%AA%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%92%8C%E5%8E%9F%E6%9C%AC%E5%8F%AF%E4%BB%A5%E5%BF%AB%E4%B9%90%E7%9A%84%E5%9B%9B%E4%BA%BA%E8%81%94%E6%9C%BA%E6%97%B6%E5%85%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {
       set: (key, value, ttl) => {
-        if (!ttl) return
-        const expiry = Date.now() + ttl * 86400000
-        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
       },
       get: key => {
         const itemStr = localStorage.getItem(key)
-        if (!itemStr) return undefined
-        const { value, expiry } = JSON.parse(itemStr)
-        if (Date.now() > expiry) {
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
           localStorage.removeItem(key)
-          return undefined
         }
-        return value
       }
     }
 
+    const scriptCache = new Map()
+    const cssCache = new Map()
     window.btf = {
       saveToLocal,
-      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
-        script.onload = script.onreadystatechange = () => {
-          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
         }
-        script.onerror = reject
-        document.head.appendChild(script)
-      }),
-      getCSS: (url, id) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onload = link.onreadystatechange = () => {
-          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
         }
-        link.onerror = reject
-        document.head.appendChild(link)
-      }),
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
       addGlobalFn: (key, fn, name = false, parent = window) => {
         if (!true && key.startsWith('pjax')) return
         const globalFn = parent.globalFn || {}
@@ -83,16 +124,17 @@
     }
   
       
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
       const activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
         }
       }
       const activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
         }
       }
 
@@ -145,7 +187,7 @@
   lightbox: 'null',
   Snackbar: undefined,
   infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
     buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
@@ -169,21 +211,308 @@ btf.addGlobalFn('pjaxSend', () => {
   Pace.restart()
 }, 'pace_restart')
 
-</script><link rel="stylesheet" href="/css/center-atom.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg" style="background-image: url(/img/15.webp);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/start/"><i class="fa-fw fas fa-compass"></i><span> 开始读</span></a></div><div class="menus_item"><a class="site-page" href="/now/"><i class="fa-fw fas fa-satellite-dish"></i><span> Now</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/15.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">jiayu</span></a><a class="nav-page-title" href="/"><span class="site-name">这里埋葬了Jiayu毫无意义的几十个小时，和原本可以快乐的四人联机时光</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/start/"><i class="fa-fw fas fa-compass"></i><span> 开始读</span></a></div><div class="menus_item"><a class="site-page" href="/now/"><i class="fa-fw fas fa-satellite-dish"></i><span> Now</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">这里埋葬了Jiayu毫无意义的几十个小时，和原本可以快乐的四人联机时光</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-02-02T13:06:38.000Z" title="发表于 2026-02-02 21:06:38">2026-02-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-12T10:01:32.474Z" title="更新于 2026-04-12 18:01:32">2026-04-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%80%9D%E8%80%83/">思考</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>sb潜兵 n10单通好难啊<br>玩弹丸都没有这么绝望</p>
+</script><link rel="stylesheet" href="/css/center-atom.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="bg-animation" id="web_bg" style="background-image: url(/img/15.webp);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/start/"><i class="fa-fw fas fa-compass"></i><span> 开始读</span></a></div><div class="menus_item"><a class="site-page" href="/now/"><i class="fa-fw fas fa-satellite-dish"></i><span> Now</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/15.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">jiayu</span></a><a class="nav-page-title" href="/"><span class="site-name">这里埋葬了Jiayu毫无意义的几十个小时，和原本可以快乐的四人联机时光</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/start/"><i class="fa-fw fas fa-compass"></i><span> 开始读</span></a></div><div class="menus_item"><a class="site-page" href="/now/"><i class="fa-fw fas fa-satellite-dish"></i><span> Now</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">这里埋葬了Jiayu毫无意义的几十个小时，和原本可以快乐的四人联机时光</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-02-02T13:06:38.000Z" title="发表于 2026-02-02 21:06:38">2026-02-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-12T10:01:32.474Z" title="更新于 2026-04-12 18:01:32">2026-04-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%80%9D%E8%80%83/">思考</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>sb潜兵 n10单通好难啊<br>玩弹丸都没有这么绝望</p>
 <hr>
 <p>2&#x2F;8<br>我觉得我需要放松，重新思考单通的意义，虽然我反复成功的证明我用反器材单通n10东线没有问题，但是我得到了什么，那也太累了只有坐牢。</p>
 <p>难道下一步我该去用反器材单通西线？还是再换一把不是很强的武器再去尝试东线？我的天，我为什么要给自己自我加难度。喜欢归喜欢，热爱归热爱，如果我把这些时间精力用去干别的事情会不会更好？但是，我也不该这样去责备自己，毕竟我也确实完成了一件很困难的事情。这也是事实。</p>
 <p>事实证明反复去做一件事去思考去试错然后解决确实可以做好<br>所花费的是时间和精力<br>一切困难也不过是纸老虎</p>
 <p>如果游戏失去他的娱乐性质转而加上目的性，这种目的性是否会毁了游戏本身意义<br>如果让我重新再来我会叫上朋友一起四人合作，而不是专门追求自己一个人强大到单通高难度任务，也许顶多把单通当作一个调味剂去试试去挑战，或许我本意便是如此；我应该想想我当初为什么要选择尝试单通，以至于到后面上头，这种”痴“确实让我挑战成功但同样也身心疲惫。</p>
 <p>有时候，没有任何理由的虚度，才是对生命最实事求是的敬意。<br>（小时候做到的事情现在却没有做到QWQ)</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jiayulee.com">chenyu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jiayulee.com/2026/02/02/%E8%BF%99%E9%87%8C%E5%9F%8B%E8%91%AC%E4%BA%86Jiayu%E6%AF%AB%E6%97%A0%E6%84%8F%E4%B9%89%E7%9A%84%E5%87%A0%E5%8D%81%E4%B8%AA%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%92%8C%E5%8E%9F%E6%9C%AC%E5%8F%AF%E4%BB%A5%E5%BF%AB%E4%B9%90%E7%9A%84%E5%9B%9B%E4%BA%BA%E8%81%94%E6%9C%BA%E6%97%B6%E5%85%89/">https://jiayulee.com/2026/02/02/%E8%BF%99%E9%87%8C%E5%9F%8B%E8%91%AC%E4%BA%86Jiayu%E6%AF%AB%E6%97%A0%E6%84%8F%E4%B9%89%E7%9A%84%E5%87%A0%E5%8D%81%E4%B8%AA%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%92%8C%E5%8E%9F%E6%9C%AC%E5%8F%AF%E4%BB%A5%E5%BF%AB%E4%B9%90%E7%9A%84%E5%9B%9B%E4%BA%BA%E8%81%94%E6%9C%BA%E6%97%B6%E5%85%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jiayulee.com" target="_blank">jiayu</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%B8%E6%88%8F/">游戏</a><a class="post-meta__tags" href="/tags/%E5%90%90%E6%A7%BD/">吐槽</a><a class="post-meta__tags" href="/tags/%E6%80%9D%E8%80%83/">思考</a></div><div class="post-share"><div class="social-share" data-image="/img/22.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/2026/02/09/%E5%8F%8D%E5%99%A8%E6%9D%90/" title="反器材"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">反器材</div></div></div></a><a class="pagination-related" href="/2026/01/12/csgo%20%E5%8F%AF%E8%A7%86%E5%8C%96%20demo%20%E8%AE%B0%E5%BD%95/" title="csgo 可视化 demo 记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">csgo 可视化 demo 记录</div></div><div class="info-2"><div class="info-item-1">用来防止自己忘记使用方法1：用vscode打开桌面文件夹2：下载视频demo “.dem”文件放进文件夹右键复制地址3：粘贴至main.py 中src.config.DEMO_PATH &#x3D; r”C:\Users\你的用户名\Desktop\cs demo\donk1.dem”   注意两个反斜杆不可缺少 r不可缺少4:按 Ctrl + S 保存5：启动游戏，调出控制台，输入playdemo xxxx 自动跳转播放demo6：打开vscode终端 输入.\venv\Scripts\Activatepython main.py7：解析完毕调出键盘即可 暂时遇到的问题：游戏界面无法显示键盘解决办法：游戏界面调成窗口全屏按f9不能同时播放demo和键盘，换言之无法协同解决办法：暂时还没找到完全处理办法，有种说法是无法确认是游戏界面导致游戏里指令没有读取建议播放前鼠标左键一下，但是我测试了一下一会好一会不好，建议多试一下过了就跳回去等解析完按f9。 </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/12/31/19%E5%B2%81/" title="19岁"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-31</div><div class="info-item-2">19岁</div></div><div class="info-2"><div class="info-item-1">早上起来泡了杯茶，打开电脑开了一把绝地潜兵。很多人不理解为什么喜欢玩游戏，是的啊为什么呢 在这个游戏里我算的上是摸着石头过河，之前都是有朋友带其实我更多并没有发挥出什么贡献就完成任务，我无法享受这个游戏带给我纯真乐趣，有的只是团队合作快乐。 所以，趁他们不在，我偷偷开了一把单人模式。我不知道如何决策，不知道如何对付不同兵种，也不知道怎么完成任务——我像个新兵一样手足无措。 我不知道的事情太多了，显然第一把我失败了完败，我发现对方兵种人数很多根本杀不完，我就想这个游戏真的杀不完兵种吗，实际上是有巢穴，所以下一次我就知道了在做任务前应当先把巢穴清理掉于是我自信的开了下一把 在下一把我又死了，为什么？我清理了巢穴，这一次并不是对方数量多，而是特定兵种不会处理。有一个大家伙坦克，我的所有枪无法对他造成任何实质性伤害，我只能人气揉捏，于是我知道了我单排时要配装合理，不能没有解决坦克的方法…. 到底为什么呢？我好像能从游戏中获得巨大的快乐。这种快乐，似乎跨越了物理世界与理念世界的边界。但是物理世界却实现不了，就如同你不可能真的在太空与同伴并肩作战，不能真的与朋友狩猎异种，不能真的独自一人开着...</div></div></div></a><a class="pagination-related" href="/2026/01/12/csgo%20%E5%8F%AF%E8%A7%86%E5%8C%96%20demo%20%E8%AE%B0%E5%BD%95/" title="csgo 可视化 demo 记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-12</div><div class="info-item-2">csgo 可视化 demo 记录</div></div><div class="info-2"><div class="info-item-1">用来防止自己忘记使用方法1：用vscode打开桌面文件夹2：下载视频demo “.dem”文件放进文件夹右键复制地址3：粘贴至main.py 中src.config.DEMO_PATH &#x3D; r”C:\Users\你的用户名\Desktop\cs demo\donk1.dem”   注意两个反斜杆不可缺少 r不可缺少4:按 Ctrl + S 保存5：启动游戏，调出控制台，输入playdemo xxxx 自动跳转播放demo6：打开vscode终端 输入.\venv\Scripts\Activatepython main.py7：解析完毕调出键盘即可 暂时遇到的问题：游戏界面无法显示键盘解决办法：游戏界面调成窗口全屏按f9不能同时播放demo和键盘，换言之无法协同解决办法：暂时还没找到完全处理办法，有种说法是无法确认是游戏界面导致游戏里指令没有读取建议播放前鼠标左键一下，但是我测试了一下一会好一会不好，建议多试一下过了就跳回去等解析完按f9。 </div></div></div></a><a class="pagination-related" href="/2025/12/27/%E4%B8%83%E6%B5%B7%E8%A1%A8%E6%83%85%E5%8C%85/" title="七海表情包"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-27</div><div class="info-item-2">七海表情包</div></div><div class="info-2"><div class="info-item-1">设计了几个好玩的表情包 </div></div></div></a><a class="pagination-related" href="/2026/03/02/%E4%B8%BB%E9%A2%98/" title="主题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-02</div><div class="info-item-2">主题</div></div><div class="info-2"><div class="info-item-1">今年的话，主题是旮旯给木（一些人觉得是美少女游戏，我并没有仅仅把它定义为美少女恋爱游戏，相比之下视觉小说也算得上。） </div></div></div></a><a class="pagination-related no-desc" href="/2026/02/09/%E5%8F%8D%E5%99%A8%E6%9D%90/" title="反器材"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-09</div><div class="info-item-2">反器材</div></div></div></a><a class="pagination-related" href="/2025/11/09/%E6%8E%A8%E8%8D%90%E6%B8%B8%E6%88%8F/" title="真正的男人，只有在了解一切之后才可以落下眼泪"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-09</div><div class="info-item-2">真正的男人，只有在了解一切之后才可以落下眼泪</div></div><div class="info-2"><div class="info-item-1">推荐一个最近在玩的推理游戏《逆转裁判1-3》！！！！！！！！！！！！！！真的非常好玩！！！！！！真的非常好玩！！！！！！真的非常好玩啊！！！！！ 认赌服输在玩1的时候卡关了一次，当我推出了所有可能性然后不对去查攻略得知答案大喊卧槽；属实没想到是这个证物真就有点欧亨式那味恨不得抽自己几个大嘴巴子 《逆转裁判:三部曲合集》是一款由CAPCOM公司发行的一款推理辩证文字冒险游戏。玩家将扮演主人公新晋律师成步堂，在迷雾重重的案件中，抽丝剥茧，找寻关键证据给狡猾的被告嫌疑人定罪。该系列最早于2001年登入GBA平台，如今三部曲合集完整收入了成步堂合集，并把更精美的画面带上PC平台，喜欢的玩家不容错过。9.5&#x2F;10（支持繁简中文） </div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">chenyu</div><div class="author-info-description">记录生活、思考、方法和阶段近况。</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mengyiheqiao"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/mengyiheqiao" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里记录生活、思考、方法，以及此刻在做什么。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/16/%E8%AF%97%E5%8F%A5/" title="诗句">诗句</a><time datetime="2026-10-16T07:18:38.000Z" title="发表于 2026-10-16 15:18:38">2026-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/26/%E5%9B%9E%E5%BD%92%E7%8E%B0%E5%AE%9E%E7%94%9F%E6%B4%BB/" title="回归现实生活">回归现实生活</a><time datetime="2026-04-26T13:48:01.000Z" title="发表于 2026-04-26 21:48:01">2026-04-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/" title="解决限制复制粘贴通解">解决限制复制粘贴通解</a><time datetime="2026-04-14T06:42:39.000Z" title="发表于 2026-04-14 14:42:39">2026-04-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/09/jung-anima/" title="从夏娃到索菲亚：深度研究阿尼玛">从夏娃到索菲亚：深度研究阿尼玛</a><time datetime="2026-04-09T11:06:24.000Z" title="发表于 2026-04-09 19:06:24">2026-04-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/09/4%E6%9C%889%E6%97%A5/" title="4月9日">4月9日</a><time datetime="2026-04-09T05:44:29.000Z" title="发表于 2026-04-09 13:44:29">2026-04-09</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By chenyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"><script>(() => {
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jiayulee.com">chenyu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jiayulee.com/2026/02/02/%E8%BF%99%E9%87%8C%E5%9F%8B%E8%91%AC%E4%BA%86Jiayu%E6%AF%AB%E6%97%A0%E6%84%8F%E4%B9%89%E7%9A%84%E5%87%A0%E5%8D%81%E4%B8%AA%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%92%8C%E5%8E%9F%E6%9C%AC%E5%8F%AF%E4%BB%A5%E5%BF%AB%E4%B9%90%E7%9A%84%E5%9B%9B%E4%BA%BA%E8%81%94%E6%9C%BA%E6%97%B6%E5%85%89/">https://jiayulee.com/2026/02/02/%E8%BF%99%E9%87%8C%E5%9F%8B%E8%91%AC%E4%BA%86Jiayu%E6%AF%AB%E6%97%A0%E6%84%8F%E4%B9%89%E7%9A%84%E5%87%A0%E5%8D%81%E4%B8%AA%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%92%8C%E5%8E%9F%E6%9C%AC%E5%8F%AF%E4%BB%A5%E5%BF%AB%E4%B9%90%E7%9A%84%E5%9B%9B%E4%BA%BA%E8%81%94%E6%9C%BA%E6%97%B6%E5%85%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jiayulee.com" target="_blank">jiayu</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%B8%E6%88%8F/">游戏</a><a class="post-meta__tags" href="/tags/%E5%90%90%E6%A7%BD/">吐槽</a><a class="post-meta__tags" href="/tags/%E6%80%9D%E8%80%83/">思考</a></div><div class="post-share"><div class="social-share" data-image="/img/22.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/2026/02/09/%E5%8F%8D%E5%99%A8%E6%9D%90/" title="反器材"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">反器材</div></div></div></a><a class="pagination-related" href="/2026/01/12/csgo%20%E5%8F%AF%E8%A7%86%E5%8C%96%20demo%20%E8%AE%B0%E5%BD%95/" title="csgo 可视化 demo 记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">csgo 可视化 demo 记录</div></div><div class="info-2"><div class="info-item-1">用来防止自己忘记使用方法1：用vscode打开桌面文件夹2：下载视频demo “.dem”文件放进文件夹右键复制地址3：粘贴至main.py 中src.config.DEMO_PATH &#x3D; r”C:\Users\你的用户名\Desktop\cs demo\donk1.dem”   注意两个反斜杆不可缺少 r不可缺少4:按 Ctrl + S 保存5：启动游戏，调出控制台，输入playdemo xxxx 自动跳转播放demo6：打开vscode终端 输入.\venv\Scripts\Activatepython main.py7：解析完毕调出键盘即可 暂时遇到的问题：游戏界面无法显示键盘解决办法：游戏界面调成窗口全屏按f9不能同时播放demo和键盘，换言之无法协同解决办法：暂时还没找到完全处理办法，有种说法是无法确认是游戏界面导致游戏里指令没有读取建议播放前鼠标左键一下，但是我测试了一下一会好一会不好，建议多试一下过了就跳回去等解析完按f9。 </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/12/31/19%E5%B2%81/" title="19岁"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-31</div><div class="info-item-2">19岁</div></div><div class="info-2"><div class="info-item-1">早上起来泡了杯茶，打开电脑开了一把绝地潜兵。很多人不理解为什么喜欢玩游戏，是的啊为什么呢 在这个游戏里我算的上是摸着石头过河，之前都是有朋友带其实我更多并没有发挥出什么贡献就完成任务，我无法享受这个游戏带给我纯真乐趣，有的只是团队合作快乐。 所以，趁他们不在，我偷偷开了一把单人模式。我不知道如何决策，不知道如何对付不同兵种，也不知道怎么完成任务——我像个新兵一样手足无措。 我不知道的事情太多了，显然第一把我失败了完败，我发现对方兵种人数很多根本杀不完，我就想这个游戏真的杀不完兵种吗，实际上是有巢穴，所以下一次我就知道了在做任务前应当先把巢穴清理掉于是我自信的开了下一把 在下一把我又死了，为什么？我清理了巢穴，这一次并不是对方数量多，而是特定兵种不会处理。有一个大家伙坦克，我的所有枪无法对他造成任何实质性伤害，我只能人气揉捏，于是我知道了我单排时要配装合理，不能没有解决坦克的方法…. 到底为什么呢？我好像能从游戏中获得巨大的快乐。这种快乐，似乎跨越了物理世界与理念世界的边界。但是物理世界却实现不了，就如同你不可能真的在太空与同伴并肩作战，不能真的与朋友狩猎异种，不能真的独自一人开着...</div></div></div></a><a class="pagination-related" href="/2025/12/27/%E4%B8%83%E6%B5%B7%E8%A1%A8%E6%83%85%E5%8C%85/" title="七海表情包"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-27</div><div class="info-item-2">七海表情包</div></div><div class="info-2"><div class="info-item-1">设计了几个好玩的表情包 </div></div></div></a><a class="pagination-related" href="/2026/04/09/jung-anima/" title="从夏娃到索菲亚：深度研究阿尼玛"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-09</div><div class="info-item-2">从夏娃到索菲亚：深度研究阿尼玛</div></div><div class="info-2"><div class="info-item-1"> 如果你以前从来没接触过荣格，那这篇文章你可以先记住一句最简单的话： 阿尼玛，就是男人内心那套关于女性、关系、爱、依赖、幻想和意义的无意识形象。 它不是现实里的某个女人，但男人常常会把它投到现实女人身上。于是，一个人表面上像是在爱一个具体的人，实际上也可能是在追逐自己内在某种还没被看清的东西。 这也是为什么有些关系会这么“失控”：明明认识没多久，却觉得对方像命中注定；明明对方只是一个普通人，却觉得她像救赎、像光、像归宿；明明关系结束了，却像整个人被挖空了一样。这些体验不一定都是假的，但其中常常夹杂着阿尼玛的投射。 如果你能先理解上面这几句话，后面的内容就不会太难。 一、先用一个最白话的例子理解阿尼玛假设一个男人遇到一个女生。她长得好看，气质安静，也愿意听他说话。很快，他开始觉得这个人“特别不一样”。他会想：她懂我，她和别人不一样，她身上有一种我一直在找的东西。 问题在于，这个判断未必完全来自她本人。很多时候，他真正被击中的，不只是眼前这个女生，而是这个女生触发了他内心早就存在的一种女性想象。于是他把很多本来属于自己无意识的东西，放到了她身上。 这就叫投射。 所以你可以先把阿尼玛理...</div></div></div></a><a class="pagination-related" href="/2025/11/09/%E6%8E%A8%E8%8D%90%E6%B8%B8%E6%88%8F/" title="真正的男人，只有在了解一切之后才可以落下眼泪"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-09</div><div class="info-item-2">真正的男人，只有在了解一切之后才可以落下眼泪</div></div><div class="info-2"><div class="info-item-1">推荐一个最近在玩的推理游戏《逆转裁判1-3》！！！！！！！！！！！！！！真的非常好玩！！！！！！真的非常好玩！！！！！！真的非常好玩啊！！！！！ 认赌服输在玩1的时候卡关了一次，当我推出了所有可能性然后不对去查攻略得知答案大喊卧槽；属实没想到是这个证物真就有点欧亨式那味恨不得抽自己几个大嘴巴子 《逆转裁判:三部曲合集》是一款由CAPCOM公司发行的一款推理辩证文字冒险游戏。玩家将扮演主人公新晋律师成步堂，在迷雾重重的案件中，抽丝剥茧，找寻关键证据给狡猾的被告嫌疑人定罪。该系列最早于2001年登入GBA平台，如今三部曲合集完整收入了成步堂合集，并把更精美的画面带上PC平台，喜欢的玩家不容错过。9.5&#x2F;10（支持繁简中文） </div></div></div></a><a class="pagination-related" href="/2026/04/01/%E7%BA%AF%E7%B2%B9%E6%80%A7/" title="纯粹性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-01</div><div class="info-item-2">纯粹性</div></div><div class="info-2"><div class="info-item-1">今天吃饭的时候，我突然想起一件让我有点在意的事。 我之前一直很喜欢一个知识分享博主。喜欢他的表达，也喜欢他讲东西时那种状态。那种感觉有点难形容，反正就是会让我觉得，他做这件事本身就很认真，很投入，不像是在刻意经营什么，更像是真的想把自己知道的东西分享出来。 可能也正因为这样，我会在心里默认他是一个“很纯粹”的人。 但最近看他的新视频时，我发现他开始挺明显地给自己的课程做引流。其实这件事本身很正常。知识博主卖课、做转化、把内容变现，完全能理解。我理性上也知道，这没什么问题，甚至可以说这是很现实也很合理的一步。 但奇怪的是，虽然我理解，我对他的喜欢还是一下子打了折扣。 不是那种“从此讨厌了”的程度，只是会很明确地感觉到：我没有以前那么喜欢他了。我对他的敬佩，也没原来那么强了。 后来我顺着这件事往下想，发现可能问题也不完全在他身上，而是在我对“纯粹性”这件事的想象里。 我好像会下意识觉得，一个我欣赏的人，只要被我归进“纯粹”这个类别里，那他最好就不要掺杂别的东西。不能有太强的商业目的，不能有太明显的自我经营，甚至最好连“我在变现”这件事都不要让我太清楚地看见。只要一看见，我心里的感觉就...</div></div></div></a><a class="pagination-related" href="/2025/11/13/%E5%90%90%E6%A7%BD/" title="吐槽"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-13</div><div class="info-item-2">吐槽</div></div><div class="info-2"><div class="info-item-1">晚上跟室友讨论了一下学校的饭菜真不是要求高筛选下来真没剩几个店了，当然我也理解开店的人，虽然学校人口基数庞大消费者多但是竞争对手也是真多啊；每个人绞尽脑子把客人引入到自己店里，有时你走去一楼那简直就是菜市场，客户都是靠抢的！如果你不去呦呵，那你就会被饿死。看似和平的校园处处是战场啊。那么又解法吗？不好说，毕竟如果算敌人的话不仅有竞争对手还有他的上级-学校，甚至是消费者！消费者能够与生意人双赢吗？我觉得不太可能，据我所知已经有不少店家倒闭了，甚至有几家是我名单上记录。很好，再也吃不到实惠的了，当店家别平台压榨，这里的损失靠谁接着？我想得转向消费者了。 </div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">chenyu</div><div class="author-info-description">记录生活、思考、方法和阶段近况。</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mengyiheqiao"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/mengyiheqiao" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里记录生活、思考、方法，以及此刻在做什么。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/16/%E8%AF%97%E5%8F%A5/" title="诗句">诗句</a><time datetime="2026-10-16T07:18:38.000Z" title="发表于 2026-10-16 15:18:38">2026-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/26/%E5%9B%9E%E5%BD%92%E7%8E%B0%E5%AE%9E%E7%94%9F%E6%B4%BB/" title="回归现实生活">回归现实生活</a><time datetime="2026-04-26T13:48:01.000Z" title="发表于 2026-04-26 21:48:01">2026-04-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/" title="解决限制复制粘贴通解">解决限制复制粘贴通解</a><time datetime="2026-04-14T06:42:39.000Z" title="发表于 2026-04-14 14:42:39">2026-04-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/09/jung-anima/" title="从夏娃到索菲亚：深度研究阿尼玛">从夏娃到索菲亚：深度研究阿尼玛</a><time datetime="2026-04-09T11:06:24.000Z" title="发表于 2026-04-09 19:06:24">2026-04-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/09/4%E6%9C%889%E6%97%A5/" title="4月9日">4月9日</a><time datetime="2026-04-09T05:44:29.000Z" title="发表于 2026-04-09 13:44:29">2026-04-09</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By chenyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.innerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+
+    setTimeout(() => URL.revokeObjectURL(url), 5000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    // Clean up previous event listeners and pending frames
+    if (wrap.__mermaidAbortController) {
+      wrap.__mermaidAbortController.abort()
+      if (wrap.__mermaidRafId) cancelAnimationFrame(wrap.__mermaidRafId)
+    }
+    const ac = new AbortController()
+    wrap.__mermaidAbortController = ac
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+    // Disable default gestures to prevent scroll chaining and pinch-zoom penetration in Chrome
+    svg.style.touchAction = 'none'
+
+    // Cache BoundingClientRect, throttled on scroll to reduce reflow
+    let cachedRect = svg.getBoundingClientRect()
+    let rectDirty = false
+    const markRectDirty = () => { rectDirty = true }
+    window.addEventListener('resize', markRectDirty, { signal: ac.signal })
+    window.addEventListener('scroll', markRectDirty, { signal: ac.signal, capture: true })
+    const getRect = () => {
+      if (rectDirty) {
+        cachedRect = svg.getBoundingClientRect()
+        rectDirty = false
+      }
+      return cachedRect
+    }
+
+    // Precompute clamp bounds from initial viewBox
+    const minW = initVb[2] * 0.1
+    const maxW = initVb[2] * 10
+    const minH = initVb[3] * 0.1
+    const maxH = initVb[3] * 10
+    const clampVb = vb => {
+      const out = vb.slice()
+      out[2] = clamp(out[2], minW, maxW)
+      out[3] = clamp(out[3], minH, maxH)
+      return out
+    }
+
+    // Throttle DOM updates using requestAnimationFrame
+    let pendingVb = null
+    let rafId = null
+    const applyVb = () => {
+      if (pendingVb) {
+        wrap.__mermaidCurViewBox = pendingVb
+        setSvgViewBox(svg, pendingVb)
+        pendingVb = null
+      }
+      rafId = null
+      wrap.__mermaidRafId = null
+    }
+    const setCurVb = vb => {
+      pendingVb = clampVb(vb)
+      if (!rafId) {
+        rafId = requestAnimationFrame(applyVb)
+        wrap.__mermaidRafId = rafId
+      }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      lastPointerX: 0,
+      lastPointerY: 0
+    }
+
+    const onPointerDown = e => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      const curVb = wrap.__mermaidCurViewBox
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+      if (state.pointers.size === 1) {
+        state.startVb = curVb.slice()
+        state.lastPointerX = e.clientX
+        state.lastPointerY = e.clientY
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = curVb.slice()
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+      const curVb = wrap.__mermaidCurViewBox
+      const rect = getRect()
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = state.pointers.values().next().value
+        const dxClient = p.x - state.lastPointerX
+        const dyClient = p.y - state.lastPointerY
+        state.lastPointerX = p.x
+        state.lastPointerY = p.y
+        const dx = dxClient * (curVb[2] / rect.width)
+        const dy = dyClient * (curVb[3] / rect.height)
+        setCurVb([curVb[0] - dx, curVb[1] - dy, curVb[2], curVb[3]])
+        return
+      }
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const px = curVb[0] + (cx - rect.left) * (curVb[2] / rect.width)
+        const py = curVb[1] + (cy - rect.top) * (curVb[3] / rect.height)
+        setCurVb(zoomAtPoint(state.startVb, factor, px, py))
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      // Release PointerCapture to avoid event capture anomalies
+      if (svg.hasPointerCapture && svg.hasPointerCapture(e.pointerId)) {
+        svg.releasePointerCapture(e.pointerId)
+      }
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+      } else if (state.pointers.size === 1) {
+        const p = state.pointers.values().next().value
+        state.lastPointerX = p.x
+        state.lastPointerY = p.y
+      }
+    }
+
+    const onWheel = e => {
+      // Prevent event bubbling from triggering external scroll
+      e.preventDefault()
+      e.stopPropagation()
+      // Normalize deltaY across deltaMode (Chrome uses pixels, Safari uses lines)
+      let delta = e.deltaY
+      if (e.deltaMode === 1) delta *= 16
+      else if (e.deltaMode === 2) delta *= 400
+
+      // Continuous zoom factor: smoother than fixed 1.1/0.9 steps
+      const zoomFactor = Math.pow(1.001, delta)
+
+      const curVb = wrap.__mermaidCurViewBox
+      const rect = getRect()
+      const px = curVb[0] + (e.clientX - rect.left) * (curVb[2] / rect.width)
+      const py = curVb[1] + (e.clientY - rect.top) * (curVb[3] / rect.height)
+      setCurVb(zoomAtPoint(curVb, zoomFactor, px, py))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (init) setCurVb(init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown, { signal: ac.signal })
+    svg.addEventListener('pointermove', onPointerMove, { signal: ac.signal })
+    svg.addEventListener('pointerup', onPointerUpOrCancel, { signal: ac.signal })
+    svg.addEventListener('pointercancel', onPointerUpOrCancel, { signal: ac.signal })
+    svg.addEventListener('wheel', onWheel, { passive: false, signal: ac.signal })
+    svg.addEventListener('dblclick', onDblClick, { signal: ac.signal })
+  }
+
   const runMermaid = ele => {
     window.loadMermaid = true
     const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
-
     ele.forEach((item, index) => {
       const mermaidSrc = item.firstElementChild
-      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      // Clean up event listeners before removing old SVG
+      if (item.__mermaidAbortController) {
+        item.__mermaidAbortController.abort()
+      }
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      let config = {}
+      try {
+        config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      } catch (e) {
+        console.warn('[mermaid] failed to parse dataset.config:', e)
+      }
       if (!config.theme) {
         config.theme = theme
       }
@@ -191,18 +520,37 @@ btf.addGlobalFn('pjaxSend', () => {
       const mermaidID = `mermaid-${index}`
       const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
 
-      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
       const renderMermaid = svg => {
         mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
       }
 
-      // mermaid v9 and v10 compatibility
-      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+      const handleError = err => {
+        console.error(`[mermaid] render failed for block #${index}:`, err)
+        const errorEl = document.createElement('div')
+        errorEl.className = 'mermaid-error'
+        errorEl.textContent = `Mermaid render error: ${err.message || err}`
+        mermaidSrc.insertAdjacentElement('afterend', errorEl)
+      }
+
+      try {
+        const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+        // mermaid v9 and v10 compatibility
+        if (typeof renderFn === 'string') {
+          renderMermaid(renderFn)
+        } else {
+          renderFn.then(({ svg }) => renderMermaid(svg)).catch(handleError)
+        }
+      } catch (err) {
+        handleError(err)
+      }
     })
   }
 
-  const codeToMermaid = () => {
-    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+  const codeToMermaid = $article => {
+    const codeMermaidEle = $article.querySelectorAll('pre > code.mermaid')
     if (codeMermaidEle.length === 0) return
 
     codeMermaidEle.forEach(ele => {
@@ -218,13 +566,16 @@ btf.addGlobalFn('pjaxSend', () => {
   }
 
   const loadMermaid = () => {
-    if (true) codeToMermaid()
-    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    const $article = document.getElementById('article-container')
+    if (!$article) return
+
+    if (true) codeToMermaid($article)
+    const $mermaid = $article.querySelectorAll('.mermaid-wrap')
     if ($mermaid.length === 0) return
 
     const runMermaidFn = () => runMermaid($mermaid)
     btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
-    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.min.js').then(runMermaidFn)
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.16.0/dist/mermaid.min.js').then(runMermaidFn)
   }
 
   btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
@@ -280,28 +631,11 @@ btf.addGlobalFn('pjaxSend', () => {
   } else {
     window.loadOtherComment = loadValine
   }
-})()</script></div><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/meting/2.0.1/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js"></script><div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="false"> </div><script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script><script>LA.init({id:"3OgqW1Lfs34OU9ox",ck:"3OgqW1Lfs34OU9ox"})</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/metingjs/dist/Meting.min.js"></script><script>(() => {
-  const destroyAplayer = () => {
-    if (window.aplayers) {
-      for (let i = 0; i < window.aplayers.length; i++) {
-        if (!window.aplayers[i].options.fixed) {
-          window.aplayers[i].destroy()
-        }
-      }
-    }
-  }
-
-  const runMetingJS = () => {
-    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-  }
-
-  btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
-  btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
-})()</script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>(() => {
+})()</script></div><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/meting/2.0.1/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js"></script><div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="false"> </div><script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script><script>LA.init({id:"3OgqW1Lfs34OU9ox",ck:"3OgqW1Lfs34OU9ox"})</script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
   const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
   window.pjax = new Pjax({
-    elements: 'a:not([target="_blank"])',
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
     selectors: pjaxSelectors,
     cacheBust: false,
     analytics: false,
@@ -334,8 +668,9 @@ btf.addGlobalFn('pjaxSend', () => {
   document.addEventListener('pjax:complete', () => {
     btf.removeGlobalFnEvent('pjaxCompleteOnce')
     document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
       const newScript = document.createElement('script')
-      const content = item.text || item.textContent || item.innerHTML || ""
+      const content = item.text || item.textContent || ''
       Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
       newScript.appendChild(document.createTextNode(content))
       item.parentNode.replaceChild(newScript, item)
@@ -345,11 +680,13 @@ btf.addGlobalFn('pjaxSend', () => {
   })
 
   document.addEventListener('pjax:error', e => {
-    if (e.request.status === 404) {
-      const usePjax = true
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
       false
-        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
-        : window.location.href = e.request.responseURL
+        ? pjax.loadUrl('/404.html')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
     }
   })
-})()</script><script async data-pjax src="/"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.2"></script></div></div></body></html>
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
