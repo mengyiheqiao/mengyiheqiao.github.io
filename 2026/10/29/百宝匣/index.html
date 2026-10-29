@@ -1,0 +1,748 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>百宝匣：把常用工具和踩过的坑装进一个箱子 | jiayu</title><meta name="author" content="chenyu"><meta name="copyright" content="chenyu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我做了一个 Windows 小软件：常用工具一键打开，踩过的坑、收来的资料都能搜到，还能用自己的 GitHub 私有仓库把文件加密带到别的电脑上。免费开源，不用注册。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百宝匣：把常用工具和踩过的坑装进一个箱子">
+<meta property="og:url" content="https://jiayulee.com/2026/10/29/%E7%99%BE%E5%AE%9D%E5%8C%A3/index.html">
+<meta property="og:site_name" content="jiayu">
+<meta property="og:description" content="我做了一个 Windows 小软件：常用工具一键打开，踩过的坑、收来的资料都能搜到，还能用自己的 GitHub 私有仓库把文件加密带到别的电脑上。免费开源，不用注册。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiayulee.com/img/22.jpg">
+<meta property="article:published_time" content="2026-10-29T08:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-29T07:24:26.858Z">
+<meta property="article:author" content="chenyu">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="开源">
+<meta property="article:tag" content="方法">
+<meta property="article:tag" content="百宝匣">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiayulee.com/img/22.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "百宝匣：把常用工具和踩过的坑装进一个箱子",
+  "url": "https://jiayulee.com/2026/10/29/%E7%99%BE%E5%AE%9D%E5%8C%A3/",
+  "image": "https://jiayulee.com/img/22.jpg",
+  "datePublished": "2026-10-29T08:00:00.000Z",
+  "dateModified": "2026-10-29T07:24:26.858Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "chenyu",
+      "url": "https://jiayulee.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jiayulee.com/2026/10/29/%E7%99%BE%E5%AE%9D%E5%8C%A3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '百宝匣：把常用工具和踩过的坑装进一个箱子',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/myStyle.css"><script src="/live2d-widget/dist/autoload.js"></script><meta name="generator" content="Hexo 8.1.1"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="/css/center-atom.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="bg-animation" id="web_bg" style="background-image: url(/img/15.webp);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/start/"><i class="fa-fw fas fa-compass"></i><span> 开始读</span></a></div><div class="menus_item"><a class="site-page" href="/now/"><i class="fa-fw fas fa-satellite-dish"></i><span> Now</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/15.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">jiayu</span></a><a class="nav-page-title" href="/"><span class="site-name">百宝匣：把常用工具和踩过的坑装进一个箱子</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/start/"><i class="fa-fw fas fa-compass"></i><span> 开始读</span></a></div><div class="menus_item"><a class="site-page" href="/now/"><i class="fa-fw fas fa-satellite-dish"></i><span> Now</span></a></div><div class="menus_item"><a class="site-page" href="/shuoshuo/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">百宝匣：把常用工具和踩过的坑装进一个箱子</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-29T08:00:00.000Z" title="发表于 2026-10-29 16:00:00">2026-10-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-29T07:24:26.858Z" title="更新于 2026-10-29 15:24:26">2026-10-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%96%B9%E6%B3%95/">方法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>我最近做了个小软件，叫<strong>百宝匣</strong>。</p>
+<p>灵感来自《我的世界》里的末影箱：一个随手就能打开、什么都装得下的箱子。</p>
+<!-- 截图：百宝匣主界面 / 工具区 -->
+
+<h2 id="为什么要做它"><a href="#为什么要做它" class="headerlink" title="为什么要做它"></a>为什么要做它</h2><p>起因是三件让我很烦的事：</p>
+<ul>
+<li><strong>工具太散</strong>：常用的网址、文件夹、软件，还有从 GitHub 下的小项目，散得到处都是。每次要用都得翻半天，项目怎么启动也早忘了。</li>
+<li><strong>踩过的坑总忘</strong>：比如怎么解除复制限制、csgo 的 demo 怎么看，当时明明解决过，过两个月又得从头查。</li>
+<li><strong>换台电脑就两手空空</strong>：在学校机房、别人的电脑上，拿不到自己的文件，也用不了自己的工具。</li>
+</ul>
+<p>所以我干脆做一个箱子，把这些全装进去。</p>
+<h2 id="它能做什么"><a href="#它能做什么" class="headerlink" title="它能做什么"></a>它能做什么</h2><p><strong>工具区：一点就开</strong></p>
+<ul>
+<li>网址、文件夹、软件、本地项目，每个都是一个抽屉，点一下就打开。</li>
+<li>本地项目会自动启动，等它准备好了再打开网页。</li>
+<li><strong>组合技</strong>：一个按钮按顺序做好几件事，比如先开代理，等 3 秒，再打开某个项目。</li>
+<li>贴上 GitHub 项目地址，就能自动下载、识别启动方式，以后还能一键检查更新。</li>
+</ul>
+<p><strong>记忆区：自己的资料库</strong></p>
+<ul>
+<li>用 Markdown 写说明，截图直接粘贴进去。</li>
+<li>PDF、电子书、Word、Excel、PPT 拖进来就能看，里面的字都能搜。</li>
+<li>用彩色活页分类，配合浏览器插件，网页上选中文字点一下就存进来。</li>
+</ul>
+<!-- 截图：记忆区 -->
+
+<p><strong>随身口袋 + 末影箱：东西跟着人走</strong></p>
+<ul>
+<li>文件放进口袋，会加密后存进你自己的 GitHub 私有仓库。到了机房，连上同一个末影箱就能拿到。</li>
+<li><strong>临时模式</strong>：在别人的电脑上用完，关掉百宝匣就清干净，不留密码、令牌和文件。</li>
+<li>没装百宝匣的电脑，用浏览器打开网页版也能取文件。</li>
+</ul>
+<!-- 截图：末影箱 -->
+
+<p><strong>还有一些好玩的</strong></p>
+<ul>
+<li><strong>AI 管家</strong>：接上 DeepSeek、通义千问等 AI 后，她会翻你的资料回答问题，并标出出处。</li>
+<li><strong>截图识字</strong>：框选屏幕上的字，自动复制。</li>
+<li><strong>皮肤</strong>：自带原皮、极简、二次元、星空四套皮肤，还能带一个会眨眼的看板娘。</li>
+</ul>
+<!-- 截图：星空皮肤 / 二次元皮肤 -->
+
+<h2 id="适合谁"><a href="#适合谁" class="headerlink" title="适合谁"></a>适合谁</h2><ul>
+<li>电脑上工具、项目一大堆，总是找不到、记不住怎么用的人。</li>
+<li>喜欢折腾，想给自己攒一个”踩坑笔记本”的人。</li>
+<li>经常在机房、公司等公共电脑和自己电脑之间来回倒腾文件的学生和上班族。</li>
+</ul>
+<h2 id="放心用"><a href="#放心用" class="headerlink" title="放心用"></a>放心用</h2><ul>
+<li><strong>数据都在你自己电脑上</strong>：不用注册，没有服务器，也不收集任何信息。</li>
+<li><strong>加密在本机完成</strong>：末影箱的文件在你电脑上加密后才上传，GitHub 上只能看到一堆乱码。</li>
+<li><strong>免费开源</strong>：MIT 协议，随便用、随便改。</li>
+</ul>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><ul>
+<li>项目主页：<a target="_blank" rel="noopener" href="https://github.com/mengyiheqiao/baibaoxia">github.com&#x2F;mengyiheqiao&#x2F;baibaoxia</a></li>
+<li>下载：<a target="_blank" rel="noopener" href="https://github.com/mengyiheqiao/baibaoxia/releases/latest">Releases 页面</a><ul>
+<li>Windows 用户下载桌面版 <code>Baibaoxia-Desktop-x.x.x.zip</code>，解压后双击 <code>百宝匣.exe</code> 就能用。</li>
+<li>macOS 和 Linux 可以用网页版（需要先装 Node.js）。</li>
+</ul>
+</li>
+<li>详细用法：<a target="_blank" rel="noopener" href="https://github.com/mengyiheqiao/baibaoxia/blob/main/docs/%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C.md">使用手册</a></li>
+</ul>
+<p>还在一点点更新。觉得好用的话，欢迎点个 Star；有想法的话，可以提 Issue，也可以在下面留言~</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://jiayulee.com">chenyu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://jiayulee.com/2026/10/29/%E7%99%BE%E5%AE%9D%E5%8C%A3/">https://jiayulee.com/2026/10/29/%E7%99%BE%E5%AE%9D%E5%8C%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://jiayulee.com" target="_blank">jiayu</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%96%B9%E6%B3%95/">方法</a><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7/">工具</a><a class="post-meta__tags" href="/tags/%E5%BC%80%E6%BA%90/">开源</a><a class="post-meta__tags" href="/tags/%E7%99%BE%E5%AE%9D%E5%8C%A3/">百宝匣</a></div><div class="post-share"><div class="social-share" data-image="/img/22.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/16/%E8%AF%97%E5%8F%A5/" title="诗句"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">诗句</div></div><div class="info-2"><div class="info-item-1">26&#x2F;10&#x2F;16饮水机的水流声很轻， 我经过你身后时的脚步也是。 楼梯间的玻璃替我留住了阳光， 也留住了你被折射出的、毫无防备的背影。 你在光里毫无察觉地走远， 一次也没有回头。 然后我也走了。 像一阵刚好路过窗户的风， 你不知道我来过， 但我知道，这就够了。 </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/01/12/csgo%20%E5%8F%AF%E8%A7%86%E5%8C%96%20demo%20%E8%AE%B0%E5%BD%95/" title="csgo 可视化 demo 记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-12</div><div class="info-item-2">csgo 可视化 demo 记录</div></div><div class="info-2"><div class="info-item-1">用来防止自己忘记使用方法1：用vscode打开桌面文件夹2：下载视频demo “.dem”文件放进文件夹右键复制地址3：粘贴至main.py 中src.config.DEMO_PATH &#x3D; r”C:\Users\你的用户名\Desktop\cs demo\donk1.dem”   注意两个反斜杆不可缺少 r不可缺少4:按 Ctrl + S 保存5：启动游戏，调出控制台，输入playdemo xxxx 自动跳转播放demo6：打开vscode终端 输入.\venv\Scripts\Activatepython main.py7：解析完毕调出键盘即可 暂时遇到的问题：游戏界面无法显示键盘解决办法：游戏界面调成窗口全屏按f9不能同时播放demo和键盘，换言之无法协同解决办法：暂时还没找到完全处理办法，有种说法是无法确认是游戏界面导致游戏里指令没有读取建议播放前鼠标左键一下，但是我测试了一下一会好一会不好，建议多试一下过了就跳回去等解析完按f9。 </div></div></div></a><a class="pagination-related" href="/2025/12/31/19%E5%B2%81/" title="19岁"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-31</div><div class="info-item-2">19岁</div></div><div class="info-2"><div class="info-item-1">早上起来泡了杯茶，打开电脑开了一把绝地潜兵。很多人不理解为什么喜欢玩游戏，是的啊为什么呢 在这个游戏里我算的上是摸着石头过河，之前都是有朋友带其实我更多并没有发挥出什么贡献就完成任务，我无法享受这个游戏带给我纯真乐趣，有的只是团队合作快乐。 所以，趁他们不在，我偷偷开了一把单人模式。我不知道如何决策，不知道如何对付不同兵种，也不知道怎么完成任务——我像个新兵一样手足无措。 我不知道的事情太多了，显然第一把我失败了完败，我发现对方兵种人数很多根本杀不完，我就想这个游戏真的杀不完兵种吗，实际上是有巢穴，所以下一次我就知道了在做任务前应当先把巢穴清理掉于是我自信的开了下一把 在下一把我又死了，为什么？我清理了巢穴，这一次并不是对方数量多，而是特定兵种不会处理。有一个大家伙坦克，我的所有枪无法对他造成任何实质性伤害，我只能人气揉捏，于是我知道了我单排时要配装合理，不能没有解决坦克的方法…. 到底为什么呢？我好像能从游戏中获得巨大的快乐。这种快乐，似乎跨越了物理世界与理念世界的边界。但是物理世界却实现不了，就如同你不可能真的在太空与同伴并肩作战，不能真的与朋友狩猎异种，不能真的独自一人开着...</div></div></div></a><a class="pagination-related" href="/2025/11/26/deepseek%E6%8F%90%E9%97%AE%E6%96%B9%E6%B3%95%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" title="deepseek提问方法（转载）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-26</div><div class="info-item-2">deepseek提问方法（转载）</div></div><div class="info-2"><div class="info-item-1">&#x2F;&#x2F;这篇文章其实已经写的够用了，把以前的一些东西先搬过来一些 deepseek 应该怎样提问为了让我的回答更准确和有用，你可以通过以下方式优化提问。我通过几个例子为你说明不同提问方式的区别： 1. 明确问题类型+具体细节 ✅ 好例子： “我想学习Python数据分析，目前会基础语法，请推荐3个适合初学者的Pandas实战项目，并说明每个项目能练习什么技能？” ❌ 不够好的例子： “怎么学Python？” 2. 复杂问题分步骤提问 ✅ 好例子： “请分三步解释：区块链技术如何保障交易安全？第一步先说明哈希函数的作用，第二步讲分布式账本，最后解释共识机制。” ❌ 不够好的例子： “区块链是怎么回事？” 3. 提供背景信息 ✅ 好例子： “我在准备留学申请（申请美国计算机硕士，GPA3.6），请对比推荐信找课程教授还是实习主管更合适？需要考虑哪些因素？” ❌ 不够好的例子： “推荐信找谁写更好？” 4. 指定回答形式 ✅ 好例子： “请用对比表格形式展示微波炉vs空气炸锅的加热原理、适用场景和能耗区别” ❌ 不够好的例子： “微波炉和空气炸锅有什么区别？” 5. 遇...</div></div></div></a><a class="pagination-related" href="/2025/11/26/%EF%BC%88%E6%80%BB%E7%BB%93%EF%BC%89deepseek%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" title="（总结）deepseek使用方法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-26</div><div class="info-item-2">（总结）deepseek使用方法</div></div><div class="info-2"><div class="info-item-1">引子：为什么同样的AI，结果天差地别？Deepseek爆火全球，但评价两极分化——有人说“工作效率翻倍”，有人却说“不过如此”。这其中的差距，就在于提问方式。 经过大量实践验证，我总结出这份终极指南，帮你彻底掌握与AI协作的核心心法。  一、核心误区：别把AI当搜索引擎最大的认知错误：用“关键词搜索”的思维与AI对话。  ❌ 搜索引擎：输入碎片关键词，自行筛选整合  ✅ AI对话：提供完整上下文，获得定制化解决方案   错误示范：  “新能源汽车市场”  “怎么写论文”  “咖啡店文案”   这些提问方式，注定只能得到泛泛而谈的答案。  二、黄金公式：结构化提问法记住这个经过验证的四要素公式： 身份 + 任务 + 细节 + 格式公式拆解：  身份：你是谁？（角色定位）  任务：要解决什么？（核心目标）  细节：限制条件？（具体参数）  格式：想要什么形式？（输出要求）   实战对比职场场景：  ❌ “分析新能源汽车市场”  ✅ “作为市场专员，请对比2024年Q4比亚迪与特斯拉的社交媒体声量，分析用户对‘降价策略’的情绪倾向，用表格呈现”   学术场景：  ❌ “帮忙改论文”  ...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/22.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">chenyu</div><div class="author-info-description">记录生活、思考、方法和阶段近况。</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/mengyiheqiao"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/mengyiheqiao" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里记录生活、思考、方法，以及此刻在做什么。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E5%AE%83"><span class="toc-number">1.</span> <span class="toc-text">为什么要做它</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">它能做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E8%B0%81"><span class="toc-number">3.</span> <span class="toc-text">适合谁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%BE%E5%BF%83%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">放心用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD"><span class="toc-number">5.</span> <span class="toc-text">下载</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/29/%E7%99%BE%E5%AE%9D%E5%8C%A3/" title="百宝匣：把常用工具和踩过的坑装进一个箱子">百宝匣：把常用工具和踩过的坑装进一个箱子</a><time datetime="2026-10-29T08:00:00.000Z" title="发表于 2026-10-29 16:00:00">2026-10-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/10/16/%E8%AF%97%E5%8F%A5/" title="诗句">诗句</a><time datetime="2026-10-16T07:18:38.000Z" title="发表于 2026-10-16 15:18:38">2026-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/26/%E5%9B%9E%E5%BD%92%E7%8E%B0%E5%AE%9E%E7%94%9F%E6%B4%BB/" title="回归现实生活">回归现实生活</a><time datetime="2026-04-26T13:48:01.000Z" title="发表于 2026-04-26 21:48:01">2026-04-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/14/%E8%A7%A3%E5%86%B3%E8%80%81%E5%B8%88%E9%99%90%E5%88%B6%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%80%9A%E8%A7%A3/" title="解决限制复制粘贴通解">解决限制复制粘贴通解</a><time datetime="2026-04-14T06:42:39.000Z" title="发表于 2026-04-14 14:42:39">2026-04-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/09/jung-anima/" title="从夏娃到索菲亚：深度研究阿尼玛">从夏娃到索菲亚：深度研究阿尼玛</a><time datetime="2026-04-09T11:06:24.000Z" title="发表于 2026-04-09 19:06:24">2026-04-09</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By chenyu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.innerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+
+    setTimeout(() => URL.revokeObjectURL(url), 5000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    // Clean up previous event listeners and pending frames
+    if (wrap.__mermaidAbortController) {
+      wrap.__mermaidAbortController.abort()
+      if (wrap.__mermaidRafId) cancelAnimationFrame(wrap.__mermaidRafId)
+    }
+    const ac = new AbortController()
+    wrap.__mermaidAbortController = ac
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+    // Disable default gestures to prevent scroll chaining and pinch-zoom penetration in Chrome
+    svg.style.touchAction = 'none'
+
+    // Cache BoundingClientRect, throttled on scroll to reduce reflow
+    let cachedRect = svg.getBoundingClientRect()
+    let rectDirty = false
+    const markRectDirty = () => { rectDirty = true }
+    window.addEventListener('resize', markRectDirty, { signal: ac.signal })
+    window.addEventListener('scroll', markRectDirty, { signal: ac.signal, capture: true })
+    const getRect = () => {
+      if (rectDirty) {
+        cachedRect = svg.getBoundingClientRect()
+        rectDirty = false
+      }
+      return cachedRect
+    }
+
+    // Precompute clamp bounds from initial viewBox
+    const minW = initVb[2] * 0.1
+    const maxW = initVb[2] * 10
+    const minH = initVb[3] * 0.1
+    const maxH = initVb[3] * 10
+    const clampVb = vb => {
+      const out = vb.slice()
+      out[2] = clamp(out[2], minW, maxW)
+      out[3] = clamp(out[3], minH, maxH)
+      return out
+    }
+
+    // Throttle DOM updates using requestAnimationFrame
+    let pendingVb = null
+    let rafId = null
+    const applyVb = () => {
+      if (pendingVb) {
+        wrap.__mermaidCurViewBox = pendingVb
+        setSvgViewBox(svg, pendingVb)
+        pendingVb = null
+      }
+      rafId = null
+      wrap.__mermaidRafId = null
+    }
+    const setCurVb = vb => {
+      pendingVb = clampVb(vb)
+      if (!rafId) {
+        rafId = requestAnimationFrame(applyVb)
+        wrap.__mermaidRafId = rafId
+      }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      lastPointerX: 0,
+      lastPointerY: 0
+    }
+
+    const onPointerDown = e => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      const curVb = wrap.__mermaidCurViewBox
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+      if (state.pointers.size === 1) {
+        state.startVb = curVb.slice()
+        state.lastPointerX = e.clientX
+        state.lastPointerY = e.clientY
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = curVb.slice()
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+      const curVb = wrap.__mermaidCurViewBox
+      const rect = getRect()
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = state.pointers.values().next().value
+        const dxClient = p.x - state.lastPointerX
+        const dyClient = p.y - state.lastPointerY
+        state.lastPointerX = p.x
+        state.lastPointerY = p.y
+        const dx = dxClient * (curVb[2] / rect.width)
+        const dy = dyClient * (curVb[3] / rect.height)
+        setCurVb([curVb[0] - dx, curVb[1] - dy, curVb[2], curVb[3]])
+        return
+      }
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const px = curVb[0] + (cx - rect.left) * (curVb[2] / rect.width)
+        const py = curVb[1] + (cy - rect.top) * (curVb[3] / rect.height)
+        setCurVb(zoomAtPoint(state.startVb, factor, px, py))
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      // Release PointerCapture to avoid event capture anomalies
+      if (svg.hasPointerCapture && svg.hasPointerCapture(e.pointerId)) {
+        svg.releasePointerCapture(e.pointerId)
+      }
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+      } else if (state.pointers.size === 1) {
+        const p = state.pointers.values().next().value
+        state.lastPointerX = p.x
+        state.lastPointerY = p.y
+      }
+    }
+
+    const onWheel = e => {
+      // Prevent event bubbling from triggering external scroll
+      e.preventDefault()
+      e.stopPropagation()
+      // Normalize deltaY across deltaMode (Chrome uses pixels, Safari uses lines)
+      let delta = e.deltaY
+      if (e.deltaMode === 1) delta *= 16
+      else if (e.deltaMode === 2) delta *= 400
+
+      // Continuous zoom factor: smoother than fixed 1.1/0.9 steps
+      const zoomFactor = Math.pow(1.001, delta)
+
+      const curVb = wrap.__mermaidCurViewBox
+      const rect = getRect()
+      const px = curVb[0] + (e.clientX - rect.left) * (curVb[2] / rect.width)
+      const py = curVb[1] + (e.clientY - rect.top) * (curVb[3] / rect.height)
+      setCurVb(zoomAtPoint(curVb, zoomFactor, px, py))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (init) setCurVb(init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown, { signal: ac.signal })
+    svg.addEventListener('pointermove', onPointerMove, { signal: ac.signal })
+    svg.addEventListener('pointerup', onPointerUpOrCancel, { signal: ac.signal })
+    svg.addEventListener('pointercancel', onPointerUpOrCancel, { signal: ac.signal })
+    svg.addEventListener('wheel', onWheel, { passive: false, signal: ac.signal })
+    svg.addEventListener('dblclick', onDblClick, { signal: ac.signal })
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      // Clean up event listeners before removing old SVG
+      if (item.__mermaidAbortController) {
+        item.__mermaidAbortController.abort()
+      }
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      let config = {}
+      try {
+        config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      } catch (e) {
+        console.warn('[mermaid] failed to parse dataset.config:', e)
+      }
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+      const handleError = err => {
+        console.error(`[mermaid] render failed for block #${index}:`, err)
+        const errorEl = document.createElement('div')
+        errorEl.className = 'mermaid-error'
+        errorEl.textContent = `Mermaid render error: ${err.message || err}`
+        mermaidSrc.insertAdjacentElement('afterend', errorEl)
+      }
+
+      try {
+        const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+        // mermaid v9 and v10 compatibility
+        if (typeof renderFn === 'string') {
+          renderMermaid(renderFn)
+        } else {
+          renderFn.then(({ svg }) => renderMermaid(svg)).catch(handleError)
+        }
+      } catch (err) {
+        handleError(err)
+      }
+    })
+  }
+
+  const codeToMermaid = $article => {
+    const codeMermaidEle = $article.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    const $article = document.getElementById('article-container')
+    if (!$article) return
+
+    if (true) codeToMermaid($article)
+    const $mermaid = $article.querySelectorAll('.mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.16.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"placeholder":"(。・∀・)ノ 留下点什么吧","meta":["nick","mail","link"],"pageSize":10}
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'TW0GmZfqrSURslq3EjQXlURa-gzGzoHsz',
+      appKey: 'PjBN3z0v4lHZHOeNxaTtga0t',
+      avatar: 'monsterid',
+      serverURLs: 'https://tw0gmzfq.lc-cn-n1-shared.com',
+      emojiMaps: "",
+      visitor: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Valine' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script><script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/meting/2.0.1/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.5.1/dist/Valine.min.js"></script><div class="aplayer no-destroy" data-id="464916877" data-server="netease" data-type="song" data-fixed="true" data-autoplay="false"> </div><script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script><script>LA.init({id:"3OgqW1Lfs34OU9ox",ck:"3OgqW1Lfs34OU9ox"})</script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || ''
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
+      false
+        ? pjax.loadUrl('/404.html')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
