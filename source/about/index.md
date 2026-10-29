@@ -161,7 +161,7 @@ aside: false # 【关键】关闭侧边栏，实现沉浸式居中阅读
 
 <div class="about-page">
   <div class="hero-img-box">
-    <img class="hero-img" src="/img/1.jpg" alt="精神角落">
+    <img class="hero-img" src="/img/1.webp" alt="精神角落">
   </div>
 
   <div class="status-card">

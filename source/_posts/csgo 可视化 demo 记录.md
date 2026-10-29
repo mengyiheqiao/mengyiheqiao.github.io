@@ -6,12 +6,12 @@ categories:
 tags:
   - 方法
   - 游戏
-description: "用来防止自己忘记使用方法 用vscode打开桌面文件夹 下载视频demo \\\\\\\".dem\\\\\\\"文件放进文件夹右键复制地址 粘贴至main.py 中src.config.DEMO PATH = r\\\\\\\"C…"
+description: "用来防止自己忘记使用方法 用vscode打开桌面文件夹 下载视频demo \".dem\"文件放进文件夹右键复制地址 粘贴至main.py 中src.config.DEMO PATH = r\"C…"
 ---
 用来防止自己忘记使用方法
 1：用vscode打开桌面文件夹
 2：下载视频demo ".dem"文件放进文件夹右键复制地址
-3：粘贴至main.py 中src.config.DEMO_PATH = r"C:\\Users\\mengyiheqiao\\Desktop\\cs demo\\donk1.dem"   注意两个反斜杆不可缺少 r不可缺少
+3：粘贴至main.py 中src.config.DEMO_PATH = r"C:\\Users\\你的用户名\\Desktop\\cs demo\\donk1.dem"   注意两个反斜杆不可缺少 r不可缺少
 4:按 `Ctrl + S` 保存
 5：启动游戏，调出控制台，输入playdemo xxxx 自动跳转播放demo
 6：打开vscode终端 输入

@@ -13,7 +13,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://mengyiheqiao.github.io
+url: https://jiayulee.com
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -109,6 +109,13 @@ deploy:
   type: git
   repo: git@github.com:mengyiheqiao/mengyiheqiao.github.io.git
   branch: gh-pages
+
+# 本地搜索索引（hexo-generator-searchdb）
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
 
 # APlayer 配置
 aplayer:

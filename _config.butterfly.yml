@@ -66,7 +66,7 @@ avatar:
 disable_top_img: false
 
 # If the banner of page not setting, it will show the default_top_img
-default_top_img: /img/15.jpg
+default_top_img: /img/15.webp
 
 # The banner image of index page
 index_img:
@@ -95,7 +95,7 @@ footer_img: false
 
 # Website Background
 # Can set it to color or image url
-background: /img/15.jpg
+background: /img/15.webp
 
 cover:
   # Disable the cover or not
@@ -478,8 +478,8 @@ math:
 search:
   # Choose: algolia_search / local_search / docsearch
   # leave it empty if you don't need search
-  use:
-  placeholder:
+  use: local_search
+  placeholder: 搜索文章
 
   # Algolia Search
   algolia_search:
@@ -584,13 +584,13 @@ valine:
   appId: TW0GmZfqrSURslq3EjQXlURa-gzGzoHsz
   appKey: PjBN3z0v4lHZHOeNxaTtga0t
   serverURLs: https://tw0gmzfq.lc-cn-n1-shared.com
-  avatar: monsterid              
-  placeholder: (銆傘兓鈭€銉?銉?)      
-  guest_info: nick,mail,link     
-  pageSize: 10                  
-  notify: false                  
-  verify: false                  
+  avatar: monsterid
   visitor: false
+  # 主题只会把 option 里的字段传给 Valine
+  option:
+    placeholder: (。・∀・)ノ 留下点什么吧
+    meta: [nick, mail, link]
+    pageSize: 10
 
 # Waline - A simple comment system with backend support fork from Valine
 # https://waline.js.org/

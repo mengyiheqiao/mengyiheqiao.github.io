@@ -1,0 +1,15 @@
+# 统一使用 LF，避免 Windows 下的 CRLF/LF 警告和整文件 diff
+* text=auto eol=lf
+
+# Windows 批处理必须是 CRLF，否则 cmd 可能找不到 :label
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.exe binary
