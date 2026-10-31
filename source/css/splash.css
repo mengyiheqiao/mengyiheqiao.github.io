@@ -1,0 +1,133 @@
+/* ===== 启动动画：峡湾与鲸 ===== */
+/* 全部由代码实时生成：阴天的峡湾、海鸥和冲出水面捕鱼的座头鲸，随后时间飞逝入夜、极光出现 */
+
+/* 动画元素插入之前先用同色盖住页面，避免闪一下博客 */
+html.jy-splash-on::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  background: #3a4560;
+}
+html.jy-splash-on body { overflow: hidden; }
+
+#jy-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  overflow: hidden;
+  cursor: pointer;
+  background: #3a4560;
+}
+#jy-splash canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+#jy-splash .jy-scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 0.9s ease-out, transform 5.5s cubic-bezier(0.22, 0.6, 0.3, 1);
+}
+#jy-splash.jy-ready .jy-scene {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 暗角 + 胶片颗粒，让画面更像镜头拍的 */
+#jy-splash .jy-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(10, 16, 30, 0.5) 100%);
+  pointer-events: none;
+}
+#jy-splash .jy-grain {
+  position: absolute;
+  inset: -50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+  opacity: 0.08;
+  pointer-events: none;
+  animation: jy-grain 0.8s steps(4) infinite;
+}
+
+/* 文字 */
+#jy-splash .jy-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 12%;
+  text-align: center;
+  color: #f2f6fc;
+  pointer-events: none;
+}
+#jy-splash .jy-title {
+  font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-weight: 200;
+  font-size: clamp(36px, 7vw, 76px);
+  letter-spacing: 0.4em;
+  padding-left: 0.4em;
+  text-shadow: 0 2px 18px rgba(20, 30, 60, 0.45);
+  opacity: 0;
+  filter: blur(12px);
+}
+#jy-splash .jy-sub {
+  margin-top: 16px;
+  font-size: clamp(13px, 1.8vw, 16px);
+  letter-spacing: 0.55em;
+  padding-left: 0.55em;
+  color: rgba(235, 242, 252, 0.85);
+  text-shadow: 0 1px 8px rgba(20, 30, 60, 0.5);
+  opacity: 0;
+}
+/* 时间流逝、入夜、极光出现，时间慢下来之后，名字再浮现 */
+#jy-splash.jy-ready .jy-title { animation: jy-text-in 1.8s 5.4s ease-out forwards; }
+#jy-splash.jy-ready .jy-sub { animation: jy-fade 1.4s 6.2s ease-out forwards; }
+
+#jy-splash .jy-skip {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: rgba(235, 242, 252, 0.5);
+  opacity: 0;
+  animation: jy-fade 0.6s 1.2s ease-out forwards;
+}
+
+/* 结尾：海雾从下往上漫起来盖住画面，再整体淡出露出博客 */
+#jy-splash .jy-mist {
+  position: absolute;
+  inset: -20%;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(205, 214, 228, 0.95), transparent 60%),
+    radial-gradient(ellipse at 72% 70%, rgba(190, 200, 218, 0.9), transparent 55%),
+    radial-gradient(ellipse at 45% 35%, rgba(215, 222, 234, 0.85), transparent 60%),
+    linear-gradient(to top, rgba(200, 208, 222, 0.95), rgba(170, 182, 204, 0.7));
+  filter: blur(24px);
+  transform: translateY(30%);
+  transition: opacity 0.9s ease-in, transform 1.3s ease-out;
+}
+#jy-splash.jy-mist-in .jy-mist {
+  opacity: 1;
+  transform: translateY(0);
+}
+#jy-splash.jy-mist-in.jy-fast .jy-mist { transition-duration: 0.45s, 0.6s; }
+#jy-splash.jy-out {
+  opacity: 0;
+  transition: opacity 0.9s ease-out;
+}
+
+@keyframes jy-fade { to { opacity: 1; } }
+@keyframes jy-text-in { to { opacity: 1; filter: blur(0); } }
+@keyframes jy-grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-6%, 4%); }
+  50% { transform: translate(5%, -3%); }
+  75% { transform: translate(-3%, -6%); }
+  100% { transform: translate(0, 0); }
+}

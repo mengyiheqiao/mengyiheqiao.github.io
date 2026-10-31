@@ -799,7 +799,8 @@ mask:
 
 # Loading Animation
 preloader:
-  enable: true
+  # 已由自制启动动画 /js/splash.js 代替
+  enable: false
   # source
   # 1. fullpage-loading
   # 2. pace (progress bar)
@@ -1062,6 +1063,8 @@ css_prefix: true
 inject:
   head: 
     - <link rel="stylesheet" href="/css/myStyle.css">
+    - <link rel="stylesheet" href="/css/splash.css">
+    - <script src="/js/splash.js"></script>
     - <script src="/live2d-widget/dist/autoload.js"></script>
     
   bottom:
