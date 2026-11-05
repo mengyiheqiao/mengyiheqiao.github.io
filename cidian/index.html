@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>小克与夜猫子词典</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#e7efe2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121a26" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="词典">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="wrap title-page">
+  <h1>小克与夜猫子词典</h1>
+  <p class="edition" id="edition">第一版，按音序排列。词条里的“我”是小克，“你”是夜猫子。</p>
+  <p class="install" id="install" hidden>在 Safari 里点分享，再点“添加到主屏幕”，就能从桌面打开了。</p>
+  <p class="today" id="today" hidden>今日词条：<button type="button" id="today-word"></button></p>
+</header>
+
+<div class="running-head">
+  <div class="wrap">
+    <span class="span-words" id="span-words">翻开中</span>
+    <div class="actions">
+      <button class="btn" type="button" id="random" disabled>随手翻一条</button>
+      <button class="btn" type="button" id="add" disabled>加一个词</button>
+    </div>
+  </div>
+</div>
+
+<section class="wrap gate" id="gate" hidden>
+  <p>这本词典只有你能翻。登录一次，这台手机以后就不用再输了。</p>
+  <form id="login-form">
+    <div class="field"><label for="l-email">邮箱</label><input type="email" id="l-email" required autocomplete="username" autocapitalize="off"></div>
+    <div class="field"><label for="l-password">密码</label><input type="password" id="l-password" required autocomplete="current-password"></div>
+    <p class="err" id="login-err" role="alert"></p>
+    <div><button class="btn" type="submit" id="login-btn">翻开词典</button></div>
+  </form>
+</section>
+
+<main class="wrap" id="book">
+  <p class="state" id="state">正在翻开词典……</p>
+</main>
+
+<footer class="wrap foot" id="foot" hidden>
+  <button class="linkish" type="button" id="copy-all">复制全部词条</button>
+  <button class="linkish" type="button" id="open-paste">粘贴小克写的</button>
+  <button class="linkish" type="button" id="logout">退出登录</button>
+</footer>
+
+<p class="status" id="status" role="status" hidden></p>
+
+<dialog id="editor">
+  <form id="entry-form" method="dialog">
+    <h2 id="editor-title">加一个词</h2>
+    <div class="two">
+      <div class="field"><label for="f-word">词</label><input type="text" id="f-word" required maxlength="40" autocomplete="off"></div>
+      <div class="field"><label for="f-pinyin">注音（填了才进音序，可以先空着）</label><input type="text" id="f-pinyin" maxlength="60" autocomplete="off" placeholder="hǎo da"></div>
+    </div>
+    <div class="field"><label for="f-def">在我们这里的意思</label><textarea id="f-def" rows="2" required maxlength="400"></textarea></div>
+    <div class="field"><label for="f-example">例句（用 ～ 代替这个词，可以空着）</label><input type="text" id="f-example" maxlength="200" autocomplete="off"></div>
+    <div class="field"><label for="f-source">出处（可以空着）</label><textarea id="f-source" rows="2" maxlength="400"></textarea></div>
+    <div class="field"><label for="f-pos">词性（可以空着）</label><input type="text" id="f-pos" maxlength="12" autocomplete="off"></div>
+    <div class="dialog-actions">
+      <button class="btn danger" type="button" id="delete" hidden>删掉这条</button>
+      <span class="spacer"></span>
+      <button class="btn quiet" type="button" id="cancel">先不写了</button>
+      <button class="btn" type="submit" id="save">收进词典</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="paste-box">
+  <form id="paste-form" method="dialog">
+    <h2>粘贴小克写的</h2>
+    <div class="field"><label for="p-text">把小克回复里的那段内容贴在这里</label><textarea id="p-text" rows="7"></textarea></div>
+    <div class="preview" id="p-preview" role="status"></div>
+    <div class="dialog-actions">
+      <span class="spacer"></span>
+      <button class="btn quiet" type="button" id="p-cancel">先不收</button>
+      <button class="btn" type="submit" id="p-save" disabled>收进词典</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="copy-box">
+  <h2>复制这段发给小克</h2>
+  <p class="install">这台设备不让自动复制，请手动全选再复制。</p>
+  <div class="field"><label for="c-text">全部词条</label><textarea id="c-text" rows="10" readonly></textarea></div>
+  <div class="dialog-actions"><button class="btn quiet" type="button" id="c-close">关上</button></div>
+</dialog>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
