@@ -323,6 +323,7 @@
   function writeCache() {
     try { localStorage.setItem(CACHE_KEY, JSON.stringify(entries)); } catch (e) { /* 只影响离线查看 */ }
   }
+  function describe(e) { return (e && (e.message || String(e))) || "未知错误"; }
   function authError() { var e = new Error("auth"); e.code = "auth"; return e; }
 
   function sessionFrom(json) {
@@ -561,7 +562,7 @@
       if (entries.length) {
         if (announce) say("没连上网络，看到的是上次的内容。");
       } else {
-        showState("没连上网络，也还没有存过内容。联网后再打开一次。");
+        showState("读不到词条（" + describe(e) + "）。换个网络，或者开关一次 VPN 再试。");
         $("span-words").textContent = "暂时翻不开";
       }
     });
@@ -581,17 +582,23 @@
         err.textContent = "邮箱或密码不对，再看一下。";
         return null;
       }
-      if (!res.ok) throw new Error("network");
+      if (!res.ok) {
+        err.textContent = "数据库暂时出错了（状态码 " + res.status + "），等一会儿再试。";
+        return null;
+      }
       return res.json();
+    }, function (e) {
+      err.textContent = "这台设备连不上数据库（" + describe(e) + "）。换个网络，或者开关一次 VPN 再试。";
+      return null;
     }).then(function (json) {
       btn.disabled = false;
       if (!json) return;
       writeSession(sessionFrom(json));
       $("l-password").value = "";
       open();
-    }).catch(function () {
+    }).catch(function (e) {
       btn.disabled = false;
-      err.textContent = "没连上网络，等信号好一点再试。";
+      err.textContent = "登录成功了，但页面出错了（" + describe(e) + "）。把这句话截图发给小克。";
     });
   });
 
