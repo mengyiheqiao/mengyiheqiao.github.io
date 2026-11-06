@@ -1,5 +1,5 @@
 /* 先给缓存里的内容，再在后台更新，信号差时也能秒开。只缓存本站文件，词条不经过这里。 */
-var CACHE = "cidian-v1";
+var CACHE = "cidian-v2";
 var SHELL = ["./", "style.css", "app.js", "config.js", "manifest.webmanifest", "fonts/fonts.css", "icons/icon-192.png"];
 
 self.addEventListener("install", function (event) {
