@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>红色极光</title>
+  <link rel="icon" href="/img/favicon.png">
+  <style>
+    :root {
+      --bg: #070a10;
+      --panel: rgba(12, 17, 26, 0.88);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #e8edf5;
+      --muted: rgba(232, 237, 245, 0.58);
+      --accent-red: #d9534f;
+      --accent-green: #4db89c;
+      --topbar-h: 44px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 75% 45% at 22% 12%, rgba(217, 83, 79, 0.14), transparent 70%),
+        radial-gradient(ellipse 65% 45% at 78% 18%, rgba(77, 184, 156, 0.11), transparent 70%),
+        var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar {
+      height: var(--topbar-h);
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(7, 10, 16, 0.86);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 20;
+    }
+
+    body.is-embed .topbar {
+      display: none;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.4;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .btn-primary {
+      border-color: rgba(217, 83, 79, 0.48);
+      background: rgba(217, 83, 79, 0.18);
+    }
+
+    .btn-primary:hover {
+      background: rgba(217, 83, 79, 0.3);
+      border-color: rgba(217, 83, 79, 0.72);
+    }
+
+    .stage-wrap {
+      width: 100vw;
+      height: calc(100vh - var(--topbar-h));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    body.is-embed .stage-wrap {
+      height: 100vh;
+    }
+
+    #unity-fullscreen-container {
+      position: relative;
+      width: min(100vw, calc((100vh - var(--topbar-h)) * 16 / 10));
+      height: min(calc(100vh - var(--topbar-h)), calc(100vw * 10 / 16));
+      background: #000;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+      overflow: hidden;
+    }
+
+    body.is-embed #unity-fullscreen-container {
+      width: 100%;
+      height: 100%;
+      box-shadow: none;
+    }
+
+    #unity-fullscreen-container:fullscreen {
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+
+    #unity-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      outline: none;
+      background: #070a10;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      z-index: 10;
+      background: #070a10;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .overlay-bg {
+      position: absolute;
+      inset: -16px;
+      background: url("poster.webp") center / cover no-repeat;
+      filter: blur(10px) brightness(0.32) saturate(1.08);
+      transform: scale(1.04);
+      z-index: -2;
+    }
+
+    .overlay-scrim {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(217, 83, 79, 0.14), transparent 58%),
+        linear-gradient(180deg, rgba(7, 10, 16, 0.52), rgba(7, 10, 16, 0.88));
+      z-index: -1;
+    }
+
+    .load-title {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 3.6vw, 34px);
+      font-weight: 600;
+      letter-spacing: 0.38em;
+      text-indent: 0.38em;
+      color: #f4f7fb;
+    }
+
+    .load-dedication {
+      margin: 0 0 28px;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      color: rgba(232, 237, 245, 0.72);
+    }
+
+    .progress-box {
+      width: min(320px, 78vw);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-red), #e88b6b 55%, var(--accent-green));
+      transition: width 0.16s ease-out;
+    }
+
+    .progress-meta {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .load-tip {
+      margin: 18px 0 0;
+      font-size: 12px;
+      color: rgba(232, 237, 245, 0.5);
+      line-height: 1.6;
+    }
+
+    .error-msg {
+      margin: 14px 0 18px;
+      max-width: 420px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #ffb4b0;
+      background: rgba(217, 83, 79, 0.14);
+      border: 1px solid rgba(217, 83, 79, 0.35);
+      border-radius: 8px;
+      padding: 10px 14px;
+      word-break: break-word;
+    }
+
+    .gate-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    #unity-warning {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 15;
+      display: none;
+      max-width: min(520px, 90%);
+      font-size: 12px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: rgba(4, 6, 10, 0.72);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.is-open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(400px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+    }
+
+    .key-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .key-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: rgba(232, 237, 245, 0.86);
+    }
+
+    .key-list li:last-child {
+      border-bottom: none;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #f4f7fb;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    (function () {
+      if (new URLSearchParams(location.search).get("embed") === "1") {
+        document.body.classList.add("is-embed");
+      }
+    })();
+  </script>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-title">红色极光</span>
+      <span class="brand-sub">献给将军</span>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" id="keys-btn">按键</button>
+      <button type="button" class="btn" id="fullscreen-btn">全屏</button>
+      <a class="btn" id="back-link" href="/2026/11/20/%E7%BA%A2%E8%89%B2%E6%9E%81%E5%85%89/">← 返回博客</a>
+    </div>
+  </header>
+
+  <main class="stage-wrap">
+    <div id="unity-fullscreen-container">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div id="unity-warning"></div>
+
+      <div class="overlay" id="loading-overlay">
+        <div class="overlay-bg"></div>
+        <div class="overlay-scrim"></div>
+        <h1 class="load-title">红色极光</h1>
+        <p class="load-dedication">献 给 将 军</p>
+        <div class="progress-box" id="progress-box">
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="progress-meta">
+            <span id="progress-status">正在载入资源…</span>
+            <span id="progress-pct">0%</span>
+          </div>
+        </div>
+        <p class="load-tip" id="load-tip">首次加载约 49 MB，之后浏览器会自动缓存；换场景时自动存档。</p>
+      </div>
+
+      <div class="overlay is-hidden" id="mobile-gate">
+        <div class="overlay-bg"></div>
+        <div class="overlay-scrim"></div>
+        <h1 class="load-title">红色极光</h1>
+        <p class="load-dedication">献 给 将 军</p>
+        <p class="load-tip" style="color: rgba(232, 237, 245, 0.86); max-width: 340px; margin-top: 0;">
+          这款游戏需要键盘和鼠标操作，建议在电脑端浏览器试玩。
+        </p>
+        <div class="gate-actions">
+          <a class="btn" href="/2026/11/20/%E7%BA%A2%E8%89%B2%E6%9E%81%E5%85%89/">返回文章</a>
+          <button type="button" class="btn btn-primary" id="mobile-proceed-btn">仍要加载（约 49 MB）</button>
+        </div>
+      </div>
+
+      <div class="overlay is-hidden" id="error-overlay">
+        <div class="overlay-bg"></div>
+        <div class="overlay-scrim"></div>
+        <h1 class="load-title">红色极光</h1>
+        <div class="error-msg" id="error-msg">网页版载入失败。</div>
+        <div class="gate-actions">
+          <button type="button" class="btn btn-primary" onclick="location.reload()">重新加载</button>
+          <a class="btn" href="/2026/11/20/%E7%BA%A2%E8%89%B2%E6%9E%81%E5%85%89/">返回文章</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-backdrop" id="keys-modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-label="操作按键">
+      <div class="modal-head">
+        <h2>按键说明</h2>
+        <button type="button" class="btn" id="keys-close-btn">关闭</button>
+      </div>
+      <ul class="key-list">
+        <li><span>移动 / 雪橇转向与控速</span><span class="kbd">W A S D</span></li>
+        <li><span>转动视角 / 瞄准</span><span class="kbd">鼠标</span></li>
+        <li><span>交互 / 翻页 / 掐时机</span><span class="kbd">E / 空格 / 左键</span></li>
+        <li><span>菜单与剧情选择</span><span class="kbd">1 - 4</span></li>
+        <li><span>合奏四轨</span><span class="kbd">A S D F</span></li>
+        <li><span>物品栏 / 跳过或暂停</span><span class="kbd">Tab / Esc</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var canvas = document.querySelector("#unity-canvas");
+      var fullscreenContainer = document.querySelector("#unity-fullscreen-container");
+      var loadingOverlay = document.querySelector("#loading-overlay");
+      var mobileGate = document.querySelector("#mobile-gate");
+      var errorOverlay = document.querySelector("#error-overlay");
+      var errorMsg = document.querySelector("#error-msg");
+      var progressFill = document.querySelector("#progress-fill");
+      var progressPct = document.querySelector("#progress-pct");
+      var progressStatus = document.querySelector("#progress-status");
+      var keysModal = document.querySelector("#keys-modal");
+      var keysBtn = document.querySelector("#keys-btn");
+      var keysCloseBtn = document.querySelector("#keys-close-btn");
+      var fullscreenBtn = document.querySelector("#fullscreen-btn");
+      var backLink = document.querySelector("#back-link");
+      var mobileProceedBtn = document.querySelector("#mobile-proceed-btn");
+      var activeUnity = null;
+      var loadStarted = false;
+
+      // Guard WebGL Pointer Lock promise rejections (e.g. when modal opens, Esc unlocks, or embed iframe unmounts).
+      if (typeof Element !== "undefined" && Element.prototype && typeof Element.prototype.requestPointerLock === "function") {
+        var origRequestPointerLock = Element.prototype.requestPointerLock;
+        Element.prototype.requestPointerLock = function () {
+          if ((keysModal && keysModal.classList.contains("is-open")) || document.visibilityState === "hidden") {
+            return Promise.resolve();
+          }
+          try {
+            var res = origRequestPointerLock.apply(this, arguments);
+            if (res && typeof res.catch === "function") {
+              return res.catch(function () {});
+            }
+            return res;
+          } catch (err) {
+            return Promise.resolve();
+          }
+        };
+      }
+
+      if (document.referrer && document.referrer.indexOf(location.origin) === 0 && backLink) {
+        backLink.href = document.referrer;
+      }
+
+      function unityShowBanner(msg, type) {
+        var warningBanner = document.querySelector("#unity-warning");
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? "block" : "none";
+        }
+        var div = document.createElement("div");
+        div.innerHTML = msg;
+        div.style.padding = "8px 12px";
+        div.style.borderRadius = "6px";
+        div.style.marginBottom = "6px";
+        if (type === "error") {
+          div.style.background = "rgba(180, 42, 42, 0.92)";
+          div.style.color = "#fff";
+        } else {
+          div.style.background = "rgba(215, 168, 45, 0.92)";
+          div.style.color = "#111";
+          setTimeout(function () {
+            if (div.parentNode === warningBanner) {
+              warningBanner.removeChild(div);
+              updateBannerVisibility();
+            }
+          }, 5000);
+        }
+        warningBanner.appendChild(div);
+        updateBannerVisibility();
+      }
+
+      function showFatalError(message) {
+        loadingOverlay.classList.add("is-hidden");
+        mobileGate.classList.add("is-hidden");
+        errorMsg.textContent = String(message || "网页版载入失败，请检查浏览器 WebGL 支持或刷新重试。");
+        errorOverlay.classList.remove("is-hidden");
+      }
+
+      function enterFullscreen() {
+        if (activeUnity && typeof activeUnity.SetFullscreen === "function") {
+          activeUnity.SetFullscreen(1);
+          return;
+        }
+        if (fullscreenContainer.requestFullscreen) {
+          fullscreenContainer.requestFullscreen().catch(function () {});
+        }
+      }
+
+      if (fullscreenBtn) fullscreenBtn.addEventListener("click", enterFullscreen);
+
+      function toggleKeysModal(open) {
+        if (open && document.pointerLockElement && document.exitPointerLock) {
+          document.exitPointerLock();
+        }
+        keysModal.classList.toggle("is-open", open);
+        keysModal.setAttribute("aria-hidden", open ? "false" : "true");
+        if (!open && activeUnity) {
+          canvas.focus();
+        }
+      }
+
+      if (keysBtn) keysBtn.addEventListener("click", function () { toggleKeysModal(true); });
+      if (keysCloseBtn) keysCloseBtn.addEventListener("click", function () { toggleKeysModal(false); });
+      if (keysModal) {
+        keysModal.addEventListener("click", function (e) {
+          if (e.target === keysModal) toggleKeysModal(false);
+        });
+      }
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && keysModal.classList.contains("is-open")) {
+          toggleKeysModal(false);
+        }
+      });
+
+      canvas.addEventListener("mousedown", function () {
+        canvas.focus();
+      });
+
+      var config = {
+        arguments: [],
+        dataUrl: "Build/Web.data",
+        frameworkUrl: "Build/Web.framework.js",
+        codeUrl: "Build/Web.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        fullscreenElementID: "unity-fullscreen-container",
+        companyName: "DefaultCompany",
+        productName: "红色极光",
+        productVersion: "0.1.0",
+        autoSyncPersistentDataPath: true,
+        showBanner: unityShowBanner,
+        errorHandler: function (err) {
+          if (/WrongDocumentError|pointer lock/i.test(String(err || ""))) {
+            return true;
+          }
+          return false;
+        }
+      };
+
+      function startUnityLoad() {
+        if (loadStarted) return;
+        loadStarted = true;
+        mobileGate.classList.add("is-hidden");
+        loadingOverlay.classList.remove("is-hidden");
+
+        var script = document.createElement("script");
+        script.src = "Build/Web.loader.js";
+        script.onload = function () {
+          createUnityInstance(canvas, config, function (progress) {
+            var pct = Math.min(100, Math.max(0, Math.round(progress * 100)));
+            progressFill.style.width = pct + "%";
+            progressPct.textContent = pct + "%";
+            if (progress >= 0.9) {
+              progressStatus.textContent = "正在初始化画面…";
+            }
+          }).then(function (unityInstance) {
+            activeUnity = unityInstance;
+            loadingOverlay.classList.add("is-hidden");
+            canvas.focus();
+          }).catch(function (message) {
+            showFatalError(message);
+          });
+        };
+        script.onerror = function () {
+          showFatalError("未能加载游戏引导脚本（Build/Web.loader.js）。");
+        };
+        document.body.appendChild(script);
+      }
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        loadingOverlay.classList.add("is-hidden");
+        mobileGate.classList.remove("is-hidden");
+        mobileProceedBtn.addEventListener("click", startUnityLoad);
+      } else {
+        startUnityLoad();
+      }
+    })();
+  </script>
+</body>
+</html>
