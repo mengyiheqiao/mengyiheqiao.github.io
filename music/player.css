@@ -1,0 +1,106 @@
+.aplayer.aplayer-fixed {
+  z-index: 99;
+  box-shadow: none;
+}
+
+.aplayer.aplayer-fixed .aplayer-lrc {
+  display: none;
+}
+
+.aplayer.aplayer-fixed .aplayer-body {
+  z-index: 99;
+  border-radius: 0 6px 0 0;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+}
+
+.aplayer.aplayer-fixed .aplayer-list {
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.14);
+}
+
+.aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-bar-wrap {
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar,
+.aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-loaded,
+.aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played {
+  height: 3px;
+}
+
+.aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb {
+  margin-top: -3.5px;
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-body,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-list {
+  background: #18202c;
+  color: #edf2f7;
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-body {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-info {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-list {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-info .aplayer-music .aplayer-title {
+  color: #edf2f7;
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-info .aplayer-music .aplayer-author,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-time,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-list ol li .aplayer-list-index,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-list ol li .aplayer-list-author {
+  color: rgba(232, 237, 245, 0.65);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-miniswitcher {
+  background: #1f2937;
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-icon path,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon path,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-miniswitcher .aplayer-icon path {
+  fill: rgba(232, 237, 245, 0.78);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-icon:hover path,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon:hover path,
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-miniswitcher .aplayer-icon:hover path {
+  fill: #ffffff;
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-loaded {
+  background: rgba(255, 255, 255, 0.34);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-list ol li {
+  border-top-color: rgba(255, 255, 255, 0.08);
+  color: #e8edf5;
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-list ol li:hover {
+  background: rgba(73, 177, 245, 0.12);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-list ol li.aplayer-list-light {
+  background: rgba(73, 177, 245, 0.18);
+}
+
+[data-theme="dark"] .aplayer.aplayer-fixed .aplayer-list ol::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.18);
+}
